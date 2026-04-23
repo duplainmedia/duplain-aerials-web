@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Duplain Aerials · Southwest Florida HOA Drone Services</title>
+  <meta name="description" content="Aerial imaging for Southwest Florida HOAs. Littoral zone documentation, progress flyovers, and commercial aerial work. Based in Sarasota. Part 107, insured." />
+  <meta name="theme-color" content="#0B1416" />
+
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <meta property="og:title" content="Duplain Aerials" />
+  <meta property="og:description" content="Aerial imaging for Southwest Florida HOAs. Littoral zone documentation, progress flyovers, and commercial aerial work." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="/assets/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Duplain Aerials. Evidence, from above. Southwest Florida, Sarasota." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Duplain Aerials" />
+  <meta name="twitter:description" content="Aerial imaging for Southwest Florida HOAs. Littoral zone documentation, progress flyovers, and commercial aerial work." />
+  <meta name="twitter:image" content="/assets/og-image.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" />
+
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <svg class="sr-only" aria-hidden="true">
+    <defs>
+      <symbol id="i-propeller" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="2.4" fill="currentColor"/>
+        <path d="M20 18.5 C 10 6, 4 6, 4 18.5 C 12 20, 16 20, 20 20 Z" fill="currentColor" opacity=".85"/>
+        <path d="M20 21.5 C 30 34, 36 34, 36 21.5 C 28 20, 24 20, 20 20 Z" fill="currentColor" opacity=".85"/>
+      </symbol>
+      <symbol id="i-compass" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="1"/>
+        <circle cx="20" cy="20" r="1.6" fill="currentColor"/>
+        <path d="M20 5 L22 18 L20 21 L18 18 Z" fill="currentColor"/>
+        <path d="M20 35 L22 22 L20 21 L18 22 Z" fill="currentColor" opacity=".4"/>
+        <text x="20" y="11" text-anchor="middle" font-family="JetBrains Mono" font-size="4" fill="currentColor">N</text>
+      </symbol>
+      <symbol id="i-waterline" viewBox="0 0 40 40">
+        <path d="M2 24 Q 10 20, 18 24 T 34 24 T 50 24" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M2 30 Q 10 26, 18 30 T 34 30 T 50 30" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".6"/>
+        <path d="M6 12 L10 18 L14 14 L18 20 L24 12 L30 18 L34 14" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".8"/>
+      </symbol>
+      <symbol id="i-polygon" viewBox="0 0 40 40">
+        <path d="M8 10 L30 8 L34 24 L22 34 L6 26 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="8" cy="10" r="1.6" fill="currentColor"/>
+        <circle cx="30" cy="8" r="1.6" fill="currentColor"/>
+        <circle cx="34" cy="24" r="1.6" fill="currentColor"/>
+        <circle cx="22" cy="34" r="1.6" fill="currentColor"/>
+        <circle cx="6" cy="26" r="1.6" fill="currentColor"/>
+      </symbol>
+      <symbol id="i-pin" viewBox="0 0 40 40">
+        <path d="M20 4 C 13 4, 8 9, 8 16 C 8 24, 20 36, 20 36 C 20 36, 32 24, 32 16 C 32 9, 27 4, 20 4 Z" fill="none" stroke="currentColor" stroke-width="1.3"/>
+        <circle cx="20" cy="16" r="3.2" fill="currentColor"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="reticle" aria-hidden="true">
+    <svg viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="18" fill="none" stroke="currentColor" stroke-width=".8"/>
+      <circle cx="30" cy="30" r="1.2" fill="currentColor"/>
+      <line x1="30" y1="6" x2="30" y2="18" stroke="currentColor" stroke-width=".8"/>
+      <line x1="30" y1="42" x2="30" y2="54" stroke="currentColor" stroke-width=".8"/>
+      <line x1="6" y1="30" x2="18" y2="30" stroke="currentColor" stroke-width=".8"/>
+      <line x1="42" y1="30" x2="54" y2="30" stroke="currentColor" stroke-width=".8"/>
+    </svg>
+  </div>
+
+  <aside class="altitude" aria-hidden="true">
+    <span class="altitude-label">AGL</span>
+    <span class="altitude-value" data-altitude>400</span>
+    <span class="altitude-unit">FT</span>
+    <div class="altitude-bar"><div class="altitude-fill" data-altitude-fill></div></div>
+  </aside>
+
+  <aside class="altitude-scene" aria-hidden="true">
+    <div class="altitude-scene-inner">
+
+      <svg class="scene-element scene-cloud-high" viewBox="0 0 120 42">
+        <g fill="none" stroke="currentColor" stroke-linecap="round">
+          <path d="M8 22 Q 26 10, 48 18 Q 66 8, 88 18 Q 106 14, 116 24" stroke-width="1"/>
+          <path d="M20 30 Q 38 24, 58 30" stroke-width=".7" opacity=".55"/>
+        </g>
+      </svg>
+
+      <svg class="scene-element scene-cloud-mid" viewBox="0 0 120 34">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" opacity=".85">
+          <path d="M10 16 Q 28 8, 50 14 Q 68 6, 88 14 Q 104 10, 114 18" stroke-width=".9"/>
+          <path d="M8 24 Q 26 20, 46 24 Q 66 20, 84 24" stroke-width=".6" opacity=".6"/>
+        </g>
+      </svg>
+
+      <svg class="scene-element scene-cirrus" viewBox="0 0 120 18">
+        <g stroke="currentColor" stroke-width=".7" stroke-dasharray="3 4" opacity=".55">
+          <line x1="10" y1="9" x2="66" y2="9"/>
+          <line x1="80" y1="13" x2="114" y2="13"/>
+        </g>
+      </svg>
+
+      <svg class="scene-element scene-crane" viewBox="0 0 120 200">
+        <g fill="none" stroke="currentColor" stroke-linecap="round">
+          <line x1="10" y1="24" x2="110" y2="24" stroke-width="1.1"/>
+          <line x1="10" y1="32" x2="110" y2="32" stroke-width=".6" opacity=".55"/>
+          <g stroke-width=".5" opacity=".55">
+            <line x1="22" y1="24" x2="30" y2="32"/>
+            <line x1="38" y1="24" x2="46" y2="32"/>
+            <line x1="54" y1="24" x2="62" y2="32"/>
+            <line x1="70" y1="24" x2="78" y2="32"/>
+            <line x1="86" y1="24" x2="94" y2="32"/>
+          </g>
+          <line x1="25" y1="14" x2="55" y2="6" stroke-width=".6" opacity=".6"/>
+          <line x1="65" y1="6" x2="95" y2="14" stroke-width=".6" opacity=".6"/>
+          <rect x="55" y="6" width="10" height="14" stroke-width=".8"/>
+          <line x1="55" y1="20" x2="55" y2="200" stroke-width=".9"/>
+          <line x1="65" y1="20" x2="65" y2="200" stroke-width=".9"/>
+          <g stroke-width=".5" opacity=".6">
+            <path d="M55 34 L65 46 M65 34 L55 46"/>
+            <path d="M55 56 L65 68 M65 56 L55 68"/>
+            <path d="M55 78 L65 90 M65 78 L55 90"/>
+            <path d="M55 100 L65 112 M65 100 L55 112"/>
+            <path d="M55 122 L65 134 M65 122 L55 134"/>
+            <path d="M55 144 L65 156 M65 144 L55 156"/>
+            <path d="M55 166 L65 178 M65 166 L55 178"/>
+          </g>
+          <line x1="90" y1="32" x2="90" y2="58" stroke-width=".5" stroke-dasharray="2 2" opacity=".7"/>
+          <circle cx="90" cy="60" r="1.6" stroke-width=".5"/>
+        </g>
+      </svg>
+
+      <svg class="scene-element scene-tower" viewBox="0 0 120 180">
+        <g fill="none" stroke="currentColor" stroke-linecap="round">
+          <line x1="15" y1="12" x2="75" y2="12" stroke-width="1.1"/>
+          <path d="M20 12 L20 180" stroke-width="1"/>
+          <path d="M70 12 L70 180" stroke-width="1"/>
+          <line x1="42" y1="12" x2="42" y2="4" stroke-width=".7" opacity=".7"/>
+          <line x1="50" y1="12" x2="50" y2="4" stroke-width=".7" opacity=".7"/>
+          <line x1="46" y1="4" x2="46" y2="0" stroke-width=".5" opacity=".5"/>
+          <g stroke-width=".5" opacity=".5">
+            <line x1="20" y1="26" x2="70" y2="26"/>
+            <line x1="20" y1="40" x2="70" y2="40"/>
+            <line x1="20" y1="54" x2="70" y2="54"/>
+            <line x1="20" y1="68" x2="70" y2="68"/>
+            <line x1="20" y1="82" x2="70" y2="82"/>
+            <line x1="20" y1="96" x2="70" y2="96"/>
+            <line x1="20" y1="110" x2="70" y2="110"/>
+            <line x1="20" y1="124" x2="70" y2="124"/>
+            <line x1="20" y1="138" x2="70" y2="138"/>
+            <line x1="20" y1="152" x2="70" y2="152"/>
+            <line x1="20" y1="166" x2="70" y2="166"/>
+          </g>
+          <g stroke-width=".35" opacity=".35">
+            <line x1="33" y1="12" x2="33" y2="180"/>
+            <line x1="45" y1="12" x2="45" y2="180"/>
+            <line x1="57" y1="12" x2="57" y2="180"/>
+          </g>
+        </g>
+      </svg>
+
+      <svg class="scene-element scene-oak" viewBox="0 0 120 74">
+        <g fill="none" stroke="currentColor" stroke-linecap="round">
+          <circle cx="62" cy="38" r="26" stroke-width="1"/>
+          <circle cx="46" cy="44" r="14" stroke-width=".7" opacity=".7"/>
+          <circle cx="80" cy="42" r="17" stroke-width=".7" opacity=".7"/>
+          <circle cx="62" cy="24" r="11" stroke-width=".6" opacity=".5"/>
+          <path d="M62 74 L62 52" stroke-width="1"/>
+          <path d="M58 72 L58 56 M66 72 L66 56" stroke-width=".4" opacity=".4"/>
+        </g>
+      </svg>
+
+      <svg class="scene-element scene-palms-mid" viewBox="0 0 120 70">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width=".85">
+          <path d="M32 70 Q 34 46, 33 28"/>
+          <path d="M33 28 Q 20 26, 12 30"/>
+          <path d="M33 28 Q 46 26, 54 30"/>
+          <path d="M33 28 Q 26 16, 22 8"/>
+          <path d="M33 28 Q 40 16, 44 8"/>
+          <path d="M33 28 Q 17 20, 10 20"/>
+          <path d="M33 28 Q 49 20, 56 20"/>
+          <path d="M90 70 Q 92 48, 91 36"/>
+          <path d="M91 36 Q 82 34, 76 37"/>
+          <path d="M91 36 Q 100 34, 106 37"/>
+          <path d="M91 36 Q 86 26, 83 20"/>
+          <path d="M91 36 Q 96 26, 99 20"/>
+        </g>
+      </svg>
+
+      <svg class="scene-element scene-ground" viewBox="0 0 120 58">
+        <g fill="none" stroke="currentColor" stroke-linecap="round">
+          <line x1="0" y1="54" x2="120" y2="54" stroke-width="1" opacity=".7"/>
+          <ellipse cx="26" cy="52" rx="22" ry="2.8" stroke-width=".8"/>
+          <ellipse cx="26" cy="52" rx="17" ry="1.7" stroke-width=".6" opacity=".5"/>
+          <path d="M15 50 L19 50 M33 50 L37 50" stroke-width=".4" opacity=".4"/>
+          <path d="M60 54 L60 42 L68 36 L76 42 L76 54" stroke-width=".85"/>
+          <rect x="63" y="44" width="3" height="4" stroke-width=".4"/>
+          <rect x="69" y="44" width="3" height="4" stroke-width=".4"/>
+          <path d="M82 54 L82 44 L89 39 L96 44 L96 54" stroke-width=".85"/>
+          <rect x="85" y="46" width="2.5" height="3.5" stroke-width=".4"/>
+          <rect x="90" y="46" width="2.5" height="3.5" stroke-width=".4"/>
+          <path d="M108 54 Q 110 40, 109 30" stroke-width=".8"/>
+          <path d="M109 30 Q 102 28, 98 30" stroke-width=".55"/>
+          <path d="M109 30 Q 116 28, 120 30" stroke-width=".55"/>
+          <path d="M109 30 Q 105 22, 103 18" stroke-width=".55"/>
+          <path d="M109 30 Q 113 22, 115 18" stroke-width=".55"/>
+          <path d="M48 54 L56 54" stroke-dasharray="2 2" stroke-width=".35" opacity=".35"/>
+          <path d="M100 54 L108 54" stroke-dasharray="2 2" stroke-width=".35" opacity=".35"/>
+        </g>
+      </svg>
+
+    </div>
+  </aside>
+
+  <header class="topbar">
+    <a class="wordmark" href="#top">
+      <span class="wordmark-main">Duplain <em>Aerials</em></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-cta">Request Survey</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <section class="hero" id="hero">
+      <div class="hero-contours" aria-hidden="true">
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+          <g fill="none" stroke="currentColor" stroke-width=".6" opacity=".55">
+            <path d="M-200 720 Q 200 620, 520 680 T 1100 660 T 1900 720"/>
+            <path d="M-200 660 Q 220 560, 540 620 T 1120 600 T 1900 660"/>
+            <path d="M-200 600 Q 240 500, 560 560 T 1140 540 T 1900 600"/>
+            <path d="M-200 540 Q 260 440, 580 500 T 1160 480 T 1900 540"/>
+            <path d="M-200 480 Q 280 380, 600 440 T 1180 420 T 1900 480"/>
+            <path d="M-200 420 Q 300 320, 620 380 T 1200 360 T 1900 420"/>
+            <path d="M-200 360 Q 320 260, 640 320 T 1220 300 T 1900 360"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="hero-drone-shadow" aria-hidden="true"></div>
+
+      <div class="hero-drone" aria-hidden="true">
+        <svg viewBox="0 0 140 100" class="drone-svg">
+          <g class="drone-prop-rings">
+            <circle cx="24" cy="30" r="17"/>
+            <circle cx="116" cy="30" r="17"/>
+            <circle cx="24" cy="70" r="17"/>
+            <circle cx="116" cy="70" r="17"/>
+          </g>
+
+          <g class="drone-arms">
+            <path d="M52 44 L24 30 L24 34 L54 48 Z"/>
+            <path d="M88 44 L116 30 L116 34 L86 48 Z"/>
+            <path d="M52 56 L24 70 L24 66 L54 52 Z"/>
+            <path d="M88 56 L116 70 L116 66 L86 52 Z"/>
+          </g>
+
+          <g class="drone-prop drone-prop-1" style="transform-origin: 24px 30px;">
+            <line x1="24" y1="14" x2="24" y2="46"/>
+            <line x1="8" y1="30" x2="40" y2="30"/>
+          </g>
+          <g class="drone-prop drone-prop-2" style="transform-origin: 116px 30px;">
+            <line x1="116" y1="14" x2="116" y2="46"/>
+            <line x1="100" y1="30" x2="132" y2="30"/>
+          </g>
+          <g class="drone-prop drone-prop-3" style="transform-origin: 24px 70px;">
+            <line x1="24" y1="54" x2="24" y2="86"/>
+            <line x1="8" y1="70" x2="40" y2="70"/>
+          </g>
+          <g class="drone-prop drone-prop-4" style="transform-origin: 116px 70px;">
+            <line x1="116" y1="54" x2="116" y2="86"/>
+            <line x1="100" y1="70" x2="132" y2="70"/>
+          </g>
+
+          <g class="drone-motors">
+            <circle cx="24" cy="30" r="4.2"/>
+            <circle cx="116" cy="30" r="4.2"/>
+            <circle cx="24" cy="70" r="4.2"/>
+            <circle cx="116" cy="70" r="4.2"/>
+          </g>
+          <g class="drone-motors-inner">
+            <circle cx="24" cy="30" r="1.6"/>
+            <circle cx="116" cy="30" r="1.6"/>
+            <circle cx="24" cy="70" r="1.6"/>
+            <circle cx="116" cy="70" r="1.6"/>
+          </g>
+
+          <path class="drone-body" d="M52 40 L88 40 L96 50 L88 60 L52 60 L44 50 Z"/>
+          <path class="drone-body-inner" d="M58 45 L82 45 L87 50 L82 55 L58 55 L53 50 Z"/>
+          <rect class="drone-body-stripe" x="55" y="49" width="30" height="2" rx=".5"/>
+
+          <circle class="drone-gimbal-mount" cx="70" cy="60" r="2.4"/>
+          <circle class="drone-gimbal" cx="70" cy="64" r="4"/>
+          <circle class="drone-gimbal-lens" cx="70" cy="64" r="2.2"/>
+          <circle class="drone-gimbal-glint" cx="71" cy="63" r=".8"/>
+
+          <circle class="nav-light nav-front-l" cx="24" cy="20" r="1.4"/>
+          <circle class="nav-light nav-front-r" cx="116" cy="20" r="1.4"/>
+          <circle class="nav-light nav-rear-l" cx="24" cy="80" r="1.4"/>
+          <circle class="nav-light nav-rear-r" cx="116" cy="80" r="1.4"/>
+        </svg>
+      </div>
+
+      <div class="hero-inner">
+        <p class="eyebrow"><span class="eyebrow-dot"></span>Southwest Florida · Est. Sarasota</p>
+        <h1 class="display">
+          Evidence,
+          <em>from above.</em>
+        </h1>
+        <p class="lede">
+          Aerial imaging for Southwest Florida HOAs. Littoral zones, progress documentation, and the view you cannot get from the ground.
+        </p>
+        <div class="hero-meta">
+          <span class="meta-chip"><svg class="ico" viewBox="0 0 40 40"><use href="#i-propeller"/></svg>FAA Part 107</span>
+          <span class="meta-chip"><svg class="ico" viewBox="0 0 40 40"><use href="#i-polygon"/></svg>Fully Insured</span>
+          <span class="meta-chip"><svg class="ico" viewBox="0 0 40 40"><use href="#i-pin"/></svg>Sarasota Based</span>
+          <span class="meta-chip"><svg class="ico" viewBox="0 0 40 40"><use href="#i-compass"/></svg>Ft. Myers → Tampa</span>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#contact">Request a survey</a>
+          <a class="btn btn-ghost" href="#services">See services</a>
+        </div>
+      </div>
+
+      <div class="hero-coords" aria-hidden="true">
+        <span>27°20'12"N</span><span>082°32'58"W</span><span>ALT 0400 AGL</span>
+      </div>
+
+      <div class="hero-landscape" aria-hidden="true">
+        <div class="hero-landscape-track">
+          <svg class="hero-landscape-panel" viewBox="0 0 1600 220" preserveAspectRatio="xMinYMax meet">
+            <g id="landscape-copy" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0 200 L1600 200" stroke-width="1" opacity=".28"/>
+
+              <g opacity=".45" stroke-width=".9">
+                <path d="M18 200 L19 192 M22 200 L23 194 M26 200 L27 190"/>
+                <path d="M48 200 L49 193 M52 200 L53 188 M56 200 L57 192"/>
+                <path d="M730 200 L731 190 M734 200 L735 192 M738 200 L739 189"/>
+                <path d="M895 200 L896 193 M899 200 L900 190 M903 200 L904 194"/>
+                <path d="M1170 200 L1171 191 M1174 200 L1175 188 M1178 200 L1179 193"/>
+                <path d="M1445 200 L1446 194 M1449 200 L1450 189 M1453 200 L1454 192"/>
+                <path d="M1560 200 L1561 191 M1564 200 L1565 193 M1568 200 L1569 189"/>
+              </g>
+
+              <g stroke-width="1" opacity=".7">
+                <ellipse cx="200" cy="200" rx="130" ry="13"/>
+                <ellipse cx="200" cy="200" rx="108" ry="9" opacity=".55"/>
+                <path d="M78 200 L80 192 M82 200 L84 194 M86 200 L88 190 M92 200 L94 188 M96 200 L98 193 M100 200 L102 190" stroke-width=".9"/>
+                <path d="M305 200 L307 193 M309 200 L311 188 M313 200 L315 191" stroke-width=".9"/>
+              </g>
+
+              <g>
+                <path d="M352 200 Q 354 170, 353 130" stroke-width="1.2"/>
+                <path d="M353 130 Q 340 128, 332 132" stroke-width=".8"/>
+                <path d="M353 130 Q 366 128, 374 132" stroke-width=".8"/>
+                <path d="M353 130 Q 346 118, 344 108" stroke-width=".8"/>
+                <path d="M353 130 Q 360 118, 362 108" stroke-width=".8"/>
+                <path d="M353 130 Q 336 122, 326 118" stroke-width=".8"/>
+                <path d="M353 130 Q 370 122, 380 118" stroke-width=".8"/>
+
+                <path d="M384 200 Q 386 180, 385 152" stroke-width="1.1"/>
+                <path d="M385 152 Q 374 150, 366 154" stroke-width=".8"/>
+                <path d="M385 152 Q 396 150, 404 154" stroke-width=".8"/>
+                <path d="M385 152 Q 380 142, 378 134" stroke-width=".8"/>
+                <path d="M385 152 Q 390 142, 392 134" stroke-width=".8"/>
+              </g>
+
+              <g stroke-width="1">
+                <path d="M460 200 L460 155 L490 135 L520 155 L520 200" stroke-width="1.1"/>
+                <path d="M478 200 L478 180 L490 180 L490 200"/>
+                <rect x="498" y="170" width="14" height="12"/>
+                <rect x="498" y="155" width="14" height="10"/>
+                <path d="M504 145 L504 130 L510 130 L510 148"/>
+                <path d="M478 200 Q 470 210, 450 210" stroke-dasharray="2 3" opacity=".5"/>
+              </g>
+
+              <g>
+                <path d="M620 200 L620 50" stroke-width="1.2"/>
+                <path d="M615 195 L625 180 L615 165 L625 150 L615 135 L625 120 L615 105 L625 90 L615 75 L625 60" stroke-width=".8" opacity=".65"/>
+                <path d="M615 180 L625 180 M615 150 L625 150 M615 120 L625 120 M615 90 L625 90 M615 60 L625 60" stroke-width=".8" opacity=".4"/>
+                <path d="M620 60 L735 60" stroke-width="1.1"/>
+                <path d="M620 68 L720 62" stroke-width=".8" opacity=".55"/>
+                <path d="M620 60 L580 60 L580 70 L620 70" stroke-width="1"/>
+                <rect x="614" y="52" width="12" height="12"/>
+                <path d="M702 60 L702 132" stroke-width=".9"/>
+                <path d="M697 132 L707 132" stroke-width="1.1"/>
+                <rect x="658" y="135" width="72" height="65" stroke-dasharray="3 3" stroke-width=".9"/>
+                <path d="M658 158 L730 158 M658 180 L730 180" opacity=".5" stroke-width=".8"/>
+                <path d="M682 135 L682 200 M706 135 L706 200" opacity=".4" stroke-dasharray="2 3" stroke-width=".8"/>
+              </g>
+
+              <g stroke-width="1">
+                <path d="M810 200 L810 140 L920 140 L920 200" stroke-width="1.1"/>
+                <path d="M858 200 L858 175 L878 175 L878 200"/>
+                <rect x="820" y="158" width="16" height="14"/>
+                <rect x="840" y="158" width="16" height="14"/>
+                <rect x="884" y="158" width="16" height="14"/>
+                <rect x="904" y="158" width="14" height="14"/>
+                <g opacity=".6" stroke-width=".9">
+                  <rect x="822" y="131" width="18" height="6"/>
+                  <rect x="842" y="131" width="18" height="6"/>
+                  <rect x="862" y="131" width="18" height="6"/>
+                  <rect x="882" y="131" width="18" height="6"/>
+                  <rect x="902" y="131" width="16" height="6"/>
+                </g>
+                <rect x="848" y="146" width="44" height="4"/>
+              </g>
+
+              <g>
+                <path d="M962 200 Q 964 165, 963 125" stroke-width="1.2"/>
+                <path d="M963 125 Q 950 122, 940 128" stroke-width=".8"/>
+                <path d="M963 125 Q 976 122, 986 128" stroke-width=".8"/>
+                <path d="M963 125 Q 955 113, 950 102" stroke-width=".8"/>
+                <path d="M963 125 Q 971 113, 976 102" stroke-width=".8"/>
+                <path d="M963 125 Q 945 118, 932 115" stroke-width=".8"/>
+                <path d="M963 125 Q 981 118, 994 115" stroke-width=".8"/>
+              </g>
+
+              <g>
+                <ellipse cx="1120" cy="200" rx="140" ry="14" stroke-width="1" opacity=".7"/>
+                <ellipse cx="1120" cy="200" rx="115" ry="10" stroke-width="1" opacity=".45"/>
+                <path d="M1020 200 L1020 195 L1088 195 L1088 200" stroke-width="1.1"/>
+                <path d="M1030 195 L1030 205 M1050 195 L1050 205 M1070 195 L1070 205" stroke-width=".9" opacity=".55"/>
+                <path d="M1160 200 Q 1185 196, 1210 200" stroke-width="1.1"/>
+                <path d="M1172 197 L1177 192 M1193 197 L1198 192" stroke-width=".8"/>
+                <path d="M1040 200 Q 1045 203, 1050 200" stroke-width=".8" opacity=".45"/>
+                <path d="M1215 200 Q 1220 203, 1225 200" stroke-width=".8" opacity=".45"/>
+              </g>
+
+              <g stroke-width="1">
+                <path d="M1280 200 L1280 170 L1300 155 L1320 170 L1320 200" stroke-width="1.1"/>
+                <rect x="1293" y="183" width="10" height="17"/>
+                <rect x="1306" y="174" width="10" height="8"/>
+
+                <path d="M1340 200 L1340 165 L1370 145 L1400 165 L1400 200" stroke-width="1.1"/>
+                <rect x="1358" y="180" width="12" height="20"/>
+                <rect x="1375" y="170" width="14" height="10"/>
+                <rect x="1375" y="152" width="14" height="10"/>
+
+                <path d="M1420 200 L1420 175 L1438 160 L1458 175 L1458 200" stroke-width="1.1"/>
+                <rect x="1432" y="183" width="10" height="17"/>
+              </g>
+
+              <g>
+                <path d="M1490 200 Q 1492 175, 1491 142" stroke-width="1.1"/>
+                <path d="M1491 142 Q 1480 140, 1472 144" stroke-width=".8"/>
+                <path d="M1491 142 Q 1502 140, 1510 144" stroke-width=".8"/>
+                <path d="M1491 142 Q 1486 132, 1482 124" stroke-width=".8"/>
+                <path d="M1491 142 Q 1496 132, 1500 124" stroke-width=".8"/>
+              </g>
+
+              <g opacity=".6" stroke-width=".9">
+                <rect x="1528" y="190" width="20" height="7"/>
+                <rect x="1552" y="190" width="20" height="7"/>
+                <rect x="1576" y="190" width="20" height="7"/>
+                <path d="M1538 190 L1538 200 M1562 190 L1562 200 M1586 190 L1586 200" opacity=".5"/>
+              </g>
+            </g>
+          </svg>
+          <svg class="hero-landscape-panel" viewBox="0 0 1600 220" preserveAspectRatio="xMinYMax meet" aria-hidden="true">
+            <use href="#landscape-copy"/>
+          </svg>
+          <svg class="hero-landscape-panel" viewBox="0 0 1600 220" preserveAspectRatio="xMinYMax meet" aria-hidden="true">
+            <use href="#landscape-copy"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true">
+      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
+        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <section class="services" id="services">
+      <header class="section-head">
+        <span class="section-kicker">01 · Services</span>
+        <h2 class="section-title">What we fly.</h2>
+        <p class="section-lede">Lead work is HOA littoral-zone documentation. Everything else is built on the same principle: deliberate framing, repeatable results, files your team can actually use.</p>
+      </header>
+
+      <div class="service-grid">
+        <article class="service service-lead">
+          <header class="service-head">
+            <svg class="service-ico" viewBox="0 0 40 40"><use href="#i-waterline"/></svg>
+            <span class="service-num">01</span>
+          </header>
+          <h3>Littoral Zone Imaging</h3>
+          <p>High-resolution aerial survey of shoreline and pond-edge vegetation. Compliance documentation, treatment before-and-afters, and invasive-species tracking for Florida HOAs and the lake-management companies that service them.</p>
+          <ul class="service-tags">
+            <li>Retention ponds</li>
+            <li>Invasive species</li>
+            <li>Treatment records</li>
+            <li>Board reporting</li>
+          </ul>
+        </article>
+
+        <article class="service">
+          <header class="service-head">
+            <svg class="service-ico" viewBox="0 0 40 40"><use href="#i-polygon"/></svg>
+            <span class="service-num">02</span>
+          </header>
+          <h3>Progress Documentation</h3>
+          <p>Monthly flyovers of construction and community projects. Consistent altitude, angle, and framing, so your records align across time and tell a clean story to the board.</p>
+        </article>
+
+        <article class="service">
+          <header class="service-head">
+            <svg class="service-ico" viewBox="0 0 40 40"><use href="#i-compass"/></svg>
+            <span class="service-num">03</span>
+          </header>
+          <h3>Mapping &amp; Orthomosaics</h3>
+          <p>Stitched, georeferenced maps of parcels, retention ponds, and community assets. Delivered in formats your property managers and engineers can drop straight into their workflow.</p>
+        </article>
+
+        <article class="service">
+          <header class="service-head">
+            <svg class="service-ico" viewBox="0 0 40 40"><use href="#i-propeller"/></svg>
+            <span class="service-num">04</span>
+          </header>
+          <h3>Aerial Photography &amp; Video</h3>
+          <p>Cinematic aerial content for real estate, brand, and film. Commercial-grade hardware with an editorial eye. We come from the documentary side, not the spec-shot side.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true">
+      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
+        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <section class="work" id="work">
+      <header class="section-head">
+        <span class="section-kicker">02 · Selected Work</span>
+        <h2 class="section-title">A growing index.</h2>
+        <p class="section-lede">New operation, active portfolio. Listed below are current and in-progress projects. Full imagery and case studies populate as jobs close.</p>
+      </header>
+
+      <div class="work-grid">
+        <article class="work-card" style="--accent: var(--gulf)">
+          <div class="work-thumb">
+            <svg class="work-contours" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <g fill="none" stroke="currentColor" stroke-width=".8" opacity=".7">
+                <ellipse cx="200" cy="160" rx="140" ry="60"/>
+                <ellipse cx="200" cy="160" rx="110" ry="46"/>
+                <ellipse cx="200" cy="160" rx="80" ry="34"/>
+                <ellipse cx="200" cy="160" rx="50" ry="20"/>
+              </g>
+            </svg>
+            <span class="work-tag">Littoral Survey</span>
+            <span class="work-meta"><span>27°21'N</span><span>082°30'W</span><span>320 AGL</span></span>
+          </div>
+          <div class="work-body">
+            <h3>Deer Creek</h3>
+            <p>2025 littoral survey · Sarasota County</p>
+          </div>
+        </article>
+
+        <article class="work-card" style="--accent: var(--estuary)">
+          <div class="work-thumb">
+            <svg class="work-contours" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <g fill="none" stroke="currentColor" stroke-width=".8" opacity=".65">
+                <path d="M60 60 L340 70 L330 240 L70 230 Z"/>
+                <path d="M90 90 L310 100 L300 210 L100 200 Z"/>
+                <path d="M120 120 L280 128 L270 180 L130 172 Z"/>
+                <circle cx="200" cy="150" r="6" fill="currentColor" opacity=".35"/>
+              </g>
+            </svg>
+            <span class="work-tag">Orthomosaic</span>
+            <span class="work-meta"><span>27°15'N</span><span>082°33'W</span><span>380 AGL</span></span>
+          </div>
+          <div class="work-body">
+            <h3>Siesta Key Chapel</h3>
+            <p>Tree Foundation orthomosaic · Siesta Key</p>
+          </div>
+        </article>
+
+        <article class="work-card" style="--accent: var(--gulf-deep)">
+          <div class="work-thumb">
+            <svg class="work-contours" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <g fill="none" stroke="currentColor" stroke-width=".8" opacity=".55">
+                <path d="M0 210 Q 100 170, 200 210 T 400 210"/>
+                <path d="M0 230 Q 100 190, 200 230 T 400 230"/>
+                <circle cx="120" cy="120" r="36"/>
+                <circle cx="120" cy="120" r="18"/>
+                <path d="M260 80 L340 80 L340 140 L260 140 Z"/>
+              </g>
+            </svg>
+            <span class="work-tag">Commercial &amp; Editorial</span>
+            <span class="work-meta"><span>Archive</span><span>2023–2025</span><span>Various</span></span>
+          </div>
+          <div class="work-body">
+            <h3>Selected commercial work</h3>
+            <p>Editorial + brand aerials · Duplain Media archive</p>
+          </div>
+        </article>
+
+        <article class="work-card work-card-placeholder" style="--accent: var(--sand)">
+          <div class="work-thumb">
+            <span class="work-tag">Open Capacity</span>
+            <span class="work-empty">Your project here.</span>
+          </div>
+          <div class="work-body">
+            <h3>Booking · Summer 2026</h3>
+            <p>Recurring HOA slots available</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true">
+      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
+        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <section class="about" id="about">
+      <header class="section-head">
+        <span class="section-kicker">03 · About</span>
+        <h2 class="section-title">A small, deliberate crew.</h2>
+      </header>
+
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>Duplain Aerials is the aerial arm of Duplain Media, a Sarasota-based film and documentary studio. We fly the same way we shoot: deliberately, framed, built to be referenced later, not just scrolled past.</p>
+          <p>Our lead service is littoral-zone documentation for Southwest Florida HOAs and the lake-management companies that serve them. Around that, we take on progress flyovers, orthomosaic mapping, and editorial aerial work for clients who want more than the stock drone shot.</p>
+          <p>Based in Sarasota. Working coast from Ft. Myers through Tampa and Lakeland.</p>
+
+          <div class="crew-strip">
+            <figure class="crew-photo">
+              <div class="crew-photo-frame" data-crew-label="Caleb Duplain"></div>
+              <figcaption>Caleb Duplain · Lead Pilot</figcaption>
+            </figure>
+            <figure class="crew-photo">
+              <div class="crew-photo-frame" data-crew-label="Field crew"></div>
+              <figcaption>Field Operator · TBA</figcaption>
+            </figure>
+            <figure class="crew-photo">
+              <div class="crew-photo-frame" data-crew-label="Second unit"></div>
+              <figcaption>Second Unit · TBA</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <aside class="about-credentials">
+          <h3>On the record</h3>
+          <dl>
+            <div><dt>Certification</dt><dd>FAA Part 107 Remote Pilot</dd></div>
+            <div><dt>Insurance</dt><dd>$1M commercial liability</dd></div>
+            <div><dt>Base of operations</dt><dd>Sarasota, FL</dd></div>
+            <div><dt>Service area</dt><dd>Ft. Myers · Sarasota · Tampa · Lakeland</dd></div>
+            <div><dt>Parent studio</dt><dd>Duplain Media / Duplain Docs</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true">
+      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
+        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <section class="faq" id="faq">
+      <header class="section-head">
+        <span class="section-kicker">04 · Common Questions</span>
+        <h2 class="section-title">What boards ask first.</h2>
+        <p class="section-lede">A few of the questions that come up on the first call. If yours is not here, it goes at the top of our reply.</p>
+      </header>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>
+            <span class="faq-q">How quickly can you schedule a survey?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-a">
+            <p>Most Southwest Florida HOAs fly within two to three weeks of first contact. Rush windows when the calendar allows it. Recurring monthly or quarterly slots book further out, which is usually the cleaner way to budget anyway.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-q">Are you insured? Part 107?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-a">
+            <p>Both. FAA Part 107 Remote Pilot, $1M commercial liability. We will issue a Certificate of Insurance listing your HOA and management company as additional insured before we fly.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-q">Does the board need to approve before you fly?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-a">
+            <p>Typically the commissioning party (board, property manager, or lake-management vendor) is authorization enough for work over common areas. If your declarations require specific homeowner notice, we work within them.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-q">What do we actually receive at the end?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-a">
+            <p>For littoral surveys: high-resolution stills of every pond perimeter, a board-ready PDF, and a shared folder of the full capture. Mapping projects get georeferenced orthomosaics in whatever format your engineer or manager uses. Photo and video projects get graded deliverables plus source files.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-q">Can you coordinate with our existing lake-management vendor?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-a">
+            <p>Yes, and we recommend it. We frequently fly before and after treatment windows so both the HOA and the vendor have a clean visual record of what changed.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-q">What happens when Florida weather cancels a day?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-a">
+            <p>We reschedule around storms and low visibility at no charge. For recurring engagements, weather days are built into the cadence. Safety of flight and clean imagery both require the same window.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-q">Do you fly over private homes?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq-a">
+            <p>We work the common areas, ponds, and amenities that the HOA commissions. We do not fly persistent paths over private yards, and incidental frames of private dwellings are cropped or blurred in deliverables.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true">
+      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
+        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <section class="contact" id="contact">
+      <header class="section-head">
+        <span class="section-kicker">05 · Contact</span>
+        <h2 class="section-title">Request a survey.</h2>
+        <p class="section-lede">A few details up front lets us come back with a fit, a window, and a number. Or email direct: <a href="mailto:info@duplainmedia.com">info@duplainmedia.com</a>.</p>
+      </header>
+
+      <form class="contact-form" name="aerial-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?submitted=1">
+        <input type="hidden" name="form-name" value="aerial-inquiry" />
+        <p class="honeypot"><label>Do not fill this out: <input name="bot-field" /></label></p>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">Your name</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span class="field-label">Role</span>
+            <input type="text" name="role" placeholder="Board member, property manager, etc." />
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">Email</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+          <label class="field">
+            <span class="field-label">Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Community or project name</span>
+          <input type="text" name="community" />
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">Project type</span>
+            <select name="project_type" required data-project-type>
+              <option value="">Select one</option>
+              <option>Littoral zone imaging</option>
+              <option>Progress documentation</option>
+              <option>Mapping / orthomosaic</option>
+              <option>Aerial photography &amp; video</option>
+              <option>Not sure yet</option>
+            </select>
+          </label>
+          <label class="field field-conditional" data-show-if="Littoral zone imaging" hidden>
+            <span class="field-label">Ponds / retention areas</span>
+            <input type="text" name="pond_count" placeholder="Approx. count if known" />
+          </label>
+          <label class="field field-conditional" data-show-if="Mapping / orthomosaic" hidden>
+            <span class="field-label">Approximate acreage</span>
+            <input type="text" name="acreage" placeholder="Acres, if known" />
+          </label>
+          <label class="field field-conditional" data-show-if="Progress documentation" hidden>
+            <span class="field-label">Visit cadence</span>
+            <select name="cadence">
+              <option value="">Select one</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+              <option>Quarterly</option>
+              <option>One-off</option>
+            </select>
+          </label>
+          <label class="field field-conditional" data-show-if="Aerial photography &amp; video" hidden>
+            <span class="field-label">Deliverable</span>
+            <select name="deliverable">
+              <option value="">Select one</option>
+              <option>Stills</option>
+              <option>Video</option>
+              <option>Both</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">City</span>
+            <input type="text" name="city" />
+          </label>
+          <label class="field">
+            <span class="field-label">Timeline</span>
+            <select name="timeline">
+              <option value="">Select one</option>
+              <option>Within 2 weeks</option>
+              <option>Within 30 days</option>
+              <option>Next quarter</option>
+              <option>Recurring / ongoing</option>
+              <option>Exploratory</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Project notes</span>
+          <textarea name="notes" rows="4" placeholder="Anything relevant: acreage, existing treatment vendor, specific compliance need, tight deadline, etc."></textarea>
+        </label>
+
+        <div class="form-footer">
+          <button type="submit" class="btn btn-primary">Send inquiry</button>
+          <span class="form-note">Replies within one business day. For rush work, call <a href="tel:+19417024287">(941) 702-4287</a>.</span>
+        </div>
+      </form>
+
+      <div class="contact-strip">
+        <div>
+          <span class="strip-label">Email</span>
+          <a href="mailto:info@duplainmedia.com">info@duplainmedia.com</a>
+        </div>
+        <div>
+          <span class="strip-label">Studio</span>
+          <a href="https://duplainmedia.com" rel="noopener">duplainmedia.com</a>
+        </div>
+        <div>
+          <span class="strip-label">Base</span>
+          <span>Sarasota, FL · 27°20'N 082°33'W</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-rule"></div>
+    <div class="footer-row">
+      <span class="wordmark footer-wordmark">
+        <span class="wordmark-main">Duplain <em>Aerials</em></span>
+      </span>
+      <span class="footer-meta">© 2026 Duplain Media LLC · FAA Part 107 · Sarasota, FL · <a href="/privacy">Privacy</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

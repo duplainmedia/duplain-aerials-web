@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="glow1" cx="20%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#7CC4C9" stop-opacity=".22"/>
+      <stop offset="100%" stop-color="#7CC4C9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="85%" cy="75%" r="55%">
+      <stop offset="0%" stop-color="#2E4F3F" stop-opacity=".16"/>
+      <stop offset="100%" stop-color="#2E4F3F" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#F7F6F1"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <g fill="none" stroke="#2E4F3F" stroke-width=".8" opacity=".3">
+    <path d="M-100 520 Q 200 460, 460 500 T 900 490 T 1300 520"/>
+    <path d="M-100 480 Q 220 420, 470 460 T 910 450 T 1300 480"/>
+    <path d="M-100 440 Q 240 380, 480 420 T 920 410 T 1300 440"/>
+    <path d="M-100 400 Q 260 340, 490 380 T 930 370 T 1300 400"/>
+    <path d="M-100 360 Q 280 300, 500 340 T 940 330 T 1300 360"/>
+    <path d="M-100 320 Q 300 260, 510 300 T 950 290 T 1300 320"/>
+  </g>
+
+  <g font-family="Inter, system-ui, sans-serif" font-size="18" fill="#134350" letter-spacing="3.6" font-weight="500">
+    <circle cx="80" cy="90" r="5" fill="#1D6A7A"/>
+    <text x="98" y="96">SOUTHWEST FLORIDA  ·  EST. SARASOTA</text>
+  </g>
+
+  <text x="80" y="290" font-family="Instrument Serif, Georgia, serif" font-size="144" font-weight="400" fill="#0B1416" letter-spacing="-2">Duplain</text>
+  <text x="80" y="420" font-family="Instrument Serif, Georgia, serif" font-size="144" font-weight="400" font-style="italic" fill="#134350" letter-spacing="-2">Aerials.</text>
+
+  <text x="80" y="490" font-family="Instrument Serif, Georgia, serif" font-size="36" font-style="italic" fill="#1B2528">Evidence, from above.</text>
+
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="18" fill="#1B2528" letter-spacing="2.5">
+    <text x="80" y="570">FAA PART 107</text>
+    <text x="280" y="570" fill="#1D6A7A">·</text>
+    <text x="302" y="570">FULLY INSURED</text>
+    <text x="500" y="570" fill="#1D6A7A">·</text>
+    <text x="522" y="570">LITTORAL · MAPPING · EDITORIAL</text>
+  </g>
+
+  <g stroke="#1D6A7A" stroke-width="1.2" opacity=".8" fill="none">
+    <line x1="1120" y1="60" x2="1120" y2="84"/>
+    <line x1="1108" y1="72" x2="1132" y2="72"/>
+    <circle cx="1120" cy="72" r="14"/>
+  </g>
+
+  <g font-family="JetBrains Mono, monospace" font-size="13" fill="#134350" letter-spacing="1.8" opacity=".7">
+    <text x="1040" y="595">27°20′N  082°33′W</text>
+  </g>
+</svg>
