@@ -729,6 +729,38 @@ section {
   max-width: 560px;
 }
 
+.service-price-tiered .service-price-tiers {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0 32px;
+  margin: 4px 0 0;
+  padding: 0;
+  max-width: 820px;
+}
+.service-price-tiered .service-price-tiers > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px dotted var(--rule);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .02em;
+}
+.service-price-tiered .service-price-tiers dt {
+  color: var(--ink-soft);
+}
+.service-price-tiered .service-price-tiers dd {
+  margin: 0;
+  color: var(--ink);
+}
+.service-price-tiered .service-price-note {
+  grid-row: 3;
+  margin-top: 4px;
+}
+
 @media (max-width: 800px) {
   .service { grid-column: span 12; }
 }
