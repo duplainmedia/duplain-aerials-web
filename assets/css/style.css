@@ -1540,7 +1540,12 @@ section {
 
 /* ---------------- product page (HOA pond imaging) ---------------- */
 
-.product-body { background: var(--paper); }
+.product-body {
+  background: var(--paper);
+  --rule: rgba(11, 20, 22, 0.18);
+  --rule-soft: rgba(11, 20, 22, 0.10);
+}
+.product-body .section-kicker { color: var(--gulf-deep); }
 
 .product-hero {
   position: relative;
@@ -2017,15 +2022,16 @@ section {
   z-index: 1;
 }
 .flow-step-num {
-  width: 56px;
-  height: 56px;
-  border: 1px solid var(--gulf);
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid var(--gulf);
   border-radius: 50%;
   background: var(--paper);
   color: var(--gulf);
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 15px;
   letter-spacing: .12em;
+  font-weight: 500;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2160,11 +2166,21 @@ section {
 .case-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px 32px;
-  padding: 36px 0;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+  gap: 0;
+  padding: 0;
   margin-bottom: 32px;
+  border: 1px solid var(--rule);
+}
+.case-stats .case-stat {
+  padding: 28px 24px;
+  border-right: 1px solid var(--rule);
+}
+.case-stats .case-stat:last-child { border-right: none; }
+@media (max-width: 700px) {
+  .case-stats { grid-template-columns: repeat(2, 1fr); }
+  .case-stats .case-stat { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .case-stats .case-stat:nth-child(2n) { border-right: none; }
+  .case-stats .case-stat:nth-last-child(-n+2) { border-bottom: none; }
 }
 .case-stat {
   display: flex;
@@ -2338,32 +2354,23 @@ section {
 /* Case study pull-quote */
 
 .case-quote {
-  margin: 0 0 36px;
-  padding: 40px 48px 36px 56px;
+  margin: 0 0 40px;
+  padding: 32px 40px;
   position: relative;
-  background: var(--paper-warm);
-  border-left: 3px solid var(--gulf);
+  background: var(--paper);
+  border-left: 4px solid var(--gulf);
+  border-top: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
   max-width: 980px;
-}
-.case-quote::before {
-  content: "\201C";
-  font-family: var(--serif);
-  font-size: 6rem;
-  line-height: 1;
-  color: var(--shallow);
-  position: absolute;
-  top: 6px;
-  left: 18px;
-  opacity: .55;
 }
 .case-quote p {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1.3rem, 2vw, 1.7rem);
-  line-height: 1.35;
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  line-height: 1.45;
   color: var(--ink);
   margin: 0 0 18px;
-  position: relative;
 }
 .case-quote cite {
   font-family: var(--mono);
@@ -2376,8 +2383,7 @@ section {
 }
 
 @media (max-width: 700px) {
-  .case-quote { padding: 32px 24px 28px 32px; }
-  .case-quote::before { font-size: 4rem; left: 10px; }
+  .case-quote { padding: 24px 24px 22px; }
 }
 
 /* Lighter tweaks */
@@ -2396,6 +2402,4 @@ section {
   opacity: 0;
 }
 
-.deliverable-card:nth-child(odd) { background: var(--paper); }
-.deliverable-card:nth-child(even) { background: var(--paper-warm); }
-.deliverable-card:hover { background: var(--sand); }
+.deliverable-card:hover { background: var(--paper-warm); }
