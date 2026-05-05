@@ -4,13 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HOA Pond &amp; Littoral Imaging · Duplain Aerials</title>
-  <meta name="description" content="Drone-based pond imaging and overlay analysis for Florida HOAs. We fly your retention ponds, overlay against the original county permit, and hand back a dated record your board, your pond manager, and your management company can all work from." />
+  <meta name="description" content="Drone-based pond imaging and original-permit overlays for Florida HOAs. The dated record your board, pond manager, and county can all work from." />
   <meta name="theme-color" content="#0B1416" />
 
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 
   <meta property="og:title" content="HOA Pond &amp; Littoral Imaging · Duplain Aerials" />
-  <meta property="og:description" content="Drone-based pond imaging and overlay analysis for Florida HOAs. Confirm your community's compliance position before the county does." />
+  <meta property="og:description" content="Drone-based pond imaging and original-permit overlays for Florida HOAs. Confirm your community's compliance position before the county does." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:image" content="/assets/og-image.svg" />
@@ -30,6 +30,43 @@
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body class="doc-body product-body">
+
+  <svg class="sr-only" aria-hidden="true">
+    <defs>
+      <symbol id="i-doc" viewBox="0 0 40 40">
+        <path d="M10 6 L26 6 L32 12 L32 34 L10 34 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M26 6 L26 12 L32 12" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="14" y1="20" x2="28" y2="20" stroke="currentColor" stroke-width=".8"/>
+        <line x1="14" y1="24" x2="28" y2="24" stroke="currentColor" stroke-width=".8"/>
+        <line x1="14" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width=".8"/>
+      </symbol>
+      <symbol id="i-folder" viewBox="0 0 40 40">
+        <path d="M6 12 L16 12 L19 9 L34 9 L34 32 L6 32 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="6" y1="16" x2="34" y2="16" stroke="currentColor" stroke-width=".8" opacity=".6"/>
+      </symbol>
+      <symbol id="i-timeline" viewBox="0 0 40 40">
+        <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="1"/>
+        <circle cx="10" cy="20" r="2.4" fill="none" stroke="currentColor" stroke-width="1"/>
+        <circle cx="20" cy="20" r="2.4" fill="none" stroke="currentColor" stroke-width="1"/>
+        <circle cx="30" cy="20" r="2.4" fill="currentColor"/>
+        <line x1="10" y1="14" x2="10" y2="10" stroke="currentColor" stroke-width=".6"/>
+        <line x1="20" y1="14" x2="20" y2="8" stroke="currentColor" stroke-width=".6"/>
+        <line x1="30" y1="14" x2="30" y2="6" stroke="currentColor" stroke-width=".6"/>
+      </symbol>
+      <symbol id="i-mappin" viewBox="0 0 40 40">
+        <path d="M20 4 C 13 4, 8 9, 8 16 C 8 24, 20 36, 20 36 C 20 36, 32 24, 32 16 C 32 9, 27 4, 20 4 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="20" cy="16" r="3.2" fill="currentColor"/>
+      </symbol>
+      <symbol id="i-pond" viewBox="0 0 40 40">
+        <ellipse cx="20" cy="22" rx="14" ry="6" fill="none" stroke="currentColor" stroke-width="1"/>
+        <ellipse cx="20" cy="22" rx="10" ry="4" fill="none" stroke="currentColor" stroke-width=".7" opacity=".7"/>
+        <ellipse cx="20" cy="22" rx="6" ry="2.4" fill="none" stroke="currentColor" stroke-width=".55" opacity=".55"/>
+        <line x1="20" y1="6" x2="20" y2="14" stroke="currentColor" stroke-width=".8"/>
+        <line x1="16" y1="10" x2="20" y2="14" stroke="currentColor" stroke-width=".8"/>
+        <line x1="24" y1="10" x2="20" y2="14" stroke="currentColor" stroke-width=".8"/>
+      </symbol>
+    </defs>
+  </svg>
 
   <header class="topbar">
     <a class="wordmark" href="/">
@@ -55,338 +92,223 @@
       <div class="product-hero-contours" aria-hidden="true">
         <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
           <g fill="none" stroke="currentColor" stroke-width=".6" opacity=".4">
-            <ellipse cx="1200" cy="500" rx="380" ry="160"/>
-            <ellipse cx="1200" cy="500" rx="320" ry="132"/>
-            <ellipse cx="1200" cy="500" rx="260" ry="106"/>
-            <ellipse cx="1200" cy="500" rx="200" ry="80"/>
-            <ellipse cx="1200" cy="500" rx="140" ry="55"/>
-            <ellipse cx="1200" cy="500" rx="80" ry="32"/>
+            <ellipse cx="1240" cy="500" rx="380" ry="160"/>
+            <ellipse cx="1240" cy="500" rx="320" ry="132"/>
+            <ellipse cx="1240" cy="500" rx="260" ry="106"/>
+            <ellipse cx="1240" cy="500" rx="200" ry="80"/>
+            <ellipse cx="1240" cy="500" rx="140" ry="55"/>
+            <ellipse cx="1240" cy="500" rx="80" ry="32"/>
           </g>
-          <g fill="none" stroke="currentColor" stroke-width=".5" opacity=".3" stroke-dasharray="4 5">
-            <ellipse cx="1200" cy="500" rx="420" ry="178"/>
+          <g fill="none" stroke="currentColor" stroke-width=".5" opacity=".25" stroke-dasharray="4 5">
+            <ellipse cx="1240" cy="500" rx="430" ry="182"/>
           </g>
-          <g fill="none" stroke="currentColor" stroke-width=".4" opacity=".25">
-            <line x1="820" y1="500" x2="1580" y2="500"/>
-            <line x1="1200" y1="320" x2="1200" y2="680"/>
+          <g fill="none" stroke="currentColor" stroke-width=".4" opacity=".2">
+            <line x1="850" y1="500" x2="1620" y2="500"/>
+            <line x1="1240" y1="320" x2="1240" y2="680"/>
           </g>
         </svg>
       </div>
 
       <div class="product-hero-inner">
-        <p class="eyebrow"><span class="eyebrow-dot"></span>Florida HOAs · Lake-management vendors · Pond compliance</p>
+        <p class="eyebrow"><span class="eyebrow-dot"></span>Florida HOAs · Pond compliance</p>
         <h1 class="display">
-          Confirm your community's compliance position
-          <em>before the county does.</em>
+          Compliance evidence,
+          <em>before the county asks.</em>
         </h1>
         <p class="lede">
-          For most Florida HOAs, the littoral zone around a retention pond is a county-permitted line on a map that is meant to be a living, planted shoreline. Twenty years of growth, drought, and treatment cycles later, the two are rarely the same. We fly your ponds, overlay the imagery against your original permit, and hand back a dated record of where you actually stand. Your board, your pond manager, and your management company all work from the same numbers.
+          Drone imaging plus original-permit overlays. A dated record your board, your pond manager, and the county can all work from.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="/#contact">Schedule a discovery call</a>
-          <a class="btn btn-ghost" href="#workflow">See the engagement workflow</a>
+          <a class="btn btn-primary" href="/#contact">Schedule a call</a>
+          <a class="btn btn-ghost" href="#workflow">See how it works</a>
         </div>
-        <ul class="product-hero-credentials" aria-label="Credentials">
-          <li>FAA Part 107 licensed</li>
-          <li>$1M commercial liability via Skywatch</li>
-          <li>COI on request</li>
+        <ul class="hero-stats" aria-label="At a glance">
+          <li><strong>17</strong><span>ponds last engagement</span></li>
+          <li><strong>$500&ndash;$1,850</strong><span>per survey</span></li>
+          <li><strong>2&ndash;3 wks</strong><span>turnaround</span></li>
         </ul>
       </div>
     </section>
 
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
-
     <section class="product-section deliverable" id="deliverable">
-      <header class="section-head">
-        <span class="section-kicker">01 · The Deliverable</span>
-        <h2 class="section-title">What an HOA actually receives.</h2>
-        <p class="section-lede">No abstract reports. Specific files your board can attach to a meeting packet, your management company can file with the county or insurance, and your pond contractor can use to plan next year's treatment.</p>
+      <header class="section-head section-head-tight">
+        <span class="section-kicker">01 · What you receive</span>
+        <h2 class="section-title">Four files. One engagement.</h2>
       </header>
 
       <div class="deliverable-grid">
         <article class="deliverable-card">
-          <span class="deliverable-num">01</span>
+          <svg class="deliverable-ico" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-doc"/></svg>
           <h3>Permit-overlay PDF</h3>
-          <p>A complete visual presentation: every pond captured against the original county permit. Per-pond comparison views, summary findings, and an at-a-glance current-state composite. Built to drop into a board meeting packet.</p>
+          <p>Every pond, your original county permit, side by side.</p>
         </article>
         <article class="deliverable-card">
-          <span class="deliverable-num">02</span>
+          <svg class="deliverable-ico" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-folder"/></svg>
           <h3>Imagery archive</h3>
-          <p>Full-resolution drone imagery for every pond on the property, indexed and organized by pond ID. Yours to keep, share with the county or insurance, or hand to a successor vendor without losing continuity.</p>
+          <p>Full-resolution captures, indexed by pond. Yours to keep.</p>
         </article>
         <article class="deliverable-card">
-          <span class="deliverable-num">03</span>
+          <svg class="deliverable-ico" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-timeline"/></svg>
           <h3>Year-over-year baseline</h3>
-          <p>The first year is your reference. Every year after, we shoot the same altitudes, the same angles, and the same time windows, so your board can see what changed and what held. Compliance stops being a guess.</p>
+          <p>Same altitudes, same angles, every year after the first.</p>
         </article>
         <article class="deliverable-card">
-          <span class="deliverable-num">04</span>
+          <svg class="deliverable-ico" viewBox="0 0 40 40" aria-hidden="true"><use href="#i-mappin"/></svg>
           <h3>Composite current-state map</h3>
-          <p>An on-demand single-page composite, all ponds in current condition, modeled on the original permit-map view. Useful for resident communications and county follow-ups when the board needs one image, not twenty.</p>
+          <p>All ponds, one page, modeled on your permit map.</p>
         </article>
       </div>
     </section>
 
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
-
-    <section class="product-section workflow" id="workflow">
-      <header class="section-head">
-        <span class="section-kicker">02 · The Engagement</span>
-        <h2 class="section-title">How a project actually runs.</h2>
-        <p class="section-lede">The shape of every HOA engagement, from first inbound to year-over-year continuity. Five phases, roughly two months end-to-end on a typical seventeen-pond community.</p>
+    <section class="product-section workflow-v2" id="workflow">
+      <header class="section-head section-head-tight">
+        <span class="section-kicker">02 · How it runs</span>
+        <h2 class="section-title">Five phases, around eight weeks.</h2>
       </header>
 
-      <ol class="workflow-list">
-        <li class="workflow-phase">
-          <span class="workflow-num">Phase 01</span>
-          <div class="workflow-body">
-            <h3>Discovery and scope</h3>
-            <p>A first conversation with your board contact and pond manager about what you actually need. Most HOAs come in asking for "drone photos" and leave with a deliverable scoped to their compliance situation: imaging only, imaging plus overlay analysis, or a full annual program. Scoping is a phone call, not a quote engine.</p>
-          </div>
+      <ol class="flow-stepper">
+        <li class="flow-step">
+          <span class="flow-step-num">01</span>
+          <h3>Discovery</h3>
+          <p>A scoping call, not a quote engine.</p>
         </li>
-        <li class="workflow-phase">
-          <span class="workflow-num">Phase 02</span>
-          <div class="workflow-body">
-            <h3>Stakeholder introductions</h3>
-            <p>Before any flight, we meet your lakes-and-waterways committee chair and your pond management company on a site walk. The board introduces the manager, the manager introduces the contractor, and each handoff is a credibility check we expect and respect. Your existing pond vendor stays in the loop the whole way through.</p>
-          </div>
+        <li class="flow-step">
+          <span class="flow-step-num">02</span>
+          <h3>Site walk</h3>
+          <p>Your board, pond manager, and us, on the property.</p>
         </li>
-        <li class="workflow-phase">
-          <span class="workflow-num">Phase 03</span>
-          <div class="workflow-body">
-            <h3>Insurance and paperwork</h3>
-            <p>Before we book the flight, your management company receives a signed W-9, a Certificate of Insurance for drone liability, and confirmation of FAA Part 107 licensing. Your HOA and management firm are listed as additional insured. This is the gate that lets payment process; we handle it up front, not after delivery.</p>
-          </div>
+        <li class="flow-step">
+          <span class="flow-step-num">03</span>
+          <h3>Paperwork</h3>
+          <p>W-9, COI, Part 107 routed to your management firm.</p>
         </li>
-        <li class="workflow-phase">
-          <span class="workflow-num">Phase 04</span>
-          <div class="workflow-body">
-            <h3>Field capture and processing</h3>
-            <p>Half a day on site, mid-morning window, every pond flown at consistent altitude. Larger ponds get composite close-ups for plant identification. Then two to three weeks of overlay and analysis work in QGIS, with a sample shared mid-process so your pond manager can sign off on the visual approach. We catch our own errors before you see them.</p>
-          </div>
+        <li class="flow-step">
+          <span class="flow-step-num">04</span>
+          <h3>Capture</h3>
+          <p>Half a day on site, two to three weeks in QGIS.</p>
         </li>
-        <li class="workflow-phase">
-          <span class="workflow-num">Phase 05</span>
-          <div class="workflow-body">
-            <h3>Delivery and follow-through</h3>
-            <p>Final PDF and imagery archive delivered through your management company's preferred channel, with a built-in follow-up window for board questions, label clarifications, and any composite views the chair wants pulled out separately. Next year's quote arrives before you have to ask for it, because most boards want it on the books inside a week of seeing the current year.</p>
-          </div>
+        <li class="flow-step">
+          <span class="flow-step-num">05</span>
+          <h3>Delivery</h3>
+          <p>PDF, archive, and next year's quote in your hands.</p>
         </li>
       </ol>
     </section>
 
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
-
-    <section class="product-section stakeholders" id="who">
-      <header class="section-head">
-        <span class="section-kicker">03 · Who We Work With</span>
+    <section class="product-section stakeholders-v2" id="who">
+      <header class="section-head section-head-tight">
+        <span class="section-kicker">03 · Who's involved</span>
         <h2 class="section-title">Your existing team, not around it.</h2>
-        <p class="section-lede">An HOA pond engagement always involves the same cast. Recognizing your structure helps the work move faster.</p>
       </header>
 
-      <div class="stakeholder-grid">
-        <article class="stakeholder">
-          <h3>Your board</h3>
-          <p>Treasurer, president, or a designated liaison. Owns the budget decision and the resident-communication strategy.</p>
-        </article>
-        <article class="stakeholder">
-          <h3>Lakes &amp; waterways committee</h3>
-          <p>Often the chair is the actual decision-maker for sign-off and continuity. Wants visual evidence they can defend in a meeting.</p>
-        </article>
-        <article class="stakeholder">
-          <h3>Pond management contractor</h3>
-          <p>Beautiful Ponds, SOLitude, AAA, or similar. Provides aquatic and biological context. Stays in the loop on every engagement.</p>
-        </article>
-        <article class="stakeholder">
-          <h3>Property management company</h3>
-          <p>AMI, FirstService Residential, KW Property Management, or similar. Routes paperwork and processes payment. Requires W-9 and COI on file.</p>
-        </article>
-      </div>
-    </section>
-
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
-
-    <section class="product-section practice" id="practice">
-      <header class="section-head">
-        <span class="section-kicker">04 · How We Fly</span>
-        <h2 class="section-title">Practices that show up in the imagery.</h2>
-        <p class="section-lede">A few decisions that separate water imaging worth paying for from water imaging that ages badly. Most are not visible in the deliverable; they are why the deliverable holds up.</p>
-      </header>
-
-      <ul class="practice-list">
-        <li class="practice-item">
-          <span class="practice-num">01</span>
-          <h3>Mid-morning capture, not noon</h3>
-          <p>The 8 to 10 AM window minimizes glare on the water surface. Calmer winds reduce ripple, dew has burned off, and thermal turbulence has not yet built. Imagery captured here is consistently legible. Imagery captured at noon is consistently glare-blown.</p>
-        </li>
-        <li class="practice-item">
-          <span class="practice-num">02</span>
-          <h3>Composite close-ups on larger ponds</h3>
-          <p>For ponds where a single capture cannot resolve plant identification, we fly seven to eight overlapping close-up segments and composite them in post. The result reads at the same effective resolution as a small-pond capture, regardless of size.</p>
-        </li>
-        <li class="practice-item">
-          <span class="practice-num">03</span>
-          <h3>Pre-flight site walk with your pond manager</h3>
-          <p>Before any flight, we walk the property with whoever is contracting your aquatic treatment. They explain what is permitted, what is treated, and what is currently in dispute. The imagery is targeted to those questions, not generic.</p>
-        </li>
-        <li class="practice-item">
-          <span class="practice-num">04</span>
-          <h3>Standard community-notification protocol</h3>
-          <p>Residents are notified in advance through whatever channel your board normally uses (email blast, posted notice, neighborhood app). We schedule capture around it. No surprises in the air, no surprises in the inbox.</p>
-        </li>
+      <ul class="stakeholder-row">
+        <li><strong>Your board</strong><span>Budget. Resident communications.</span></li>
+        <li><strong>Lakes &amp; waterways committee</strong><span>Sign-off. Continuity year over year.</span></li>
+        <li><strong>Pond management contractor</strong><span>Aquatic and biological context.</span></li>
+        <li><strong>Property management firm</strong><span>Paperwork routing. Payment.</span></li>
       </ul>
     </section>
 
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
+    <section class="product-section practice-v2" id="practice">
+      <header class="section-head section-head-tight">
+        <span class="section-kicker">04 · How we fly</span>
+        <h2 class="section-title">Four habits that show up in the imagery.</h2>
+      </header>
 
-    <section class="product-section case-study" id="case-study">
-      <header class="section-head">
-        <span class="section-kicker">05 · Recent Project</span>
+      <ul class="practice-strip">
+        <li><span class="practice-strip-num">01</span><span>Mid-morning capture window, 8 to 10 AM.</span></li>
+        <li><span class="practice-strip-num">02</span><span>Composite close-ups for plant ID on larger ponds.</span></li>
+        <li><span class="practice-strip-num">03</span><span>Pre-flight site walk with your pond manager.</span></li>
+        <li><span class="practice-strip-num">04</span><span>Standard resident-notification protocol.</span></li>
+      </ul>
+    </section>
+
+    <section class="product-section case-study-v2" id="case-study">
+      <header class="section-head section-head-tight">
+        <span class="section-kicker">05 · A real engagement</span>
         <h2 class="section-title">Deer Creek Association, Sarasota.</h2>
       </header>
 
-      <div class="case-study-grid">
-        <article class="case-study-body">
-          <p><strong>Community:</strong> Deer Creek Association · Palmer Ranch, Sarasota.</p>
-          <p><strong>Scope:</strong> 17 wet-detention ponds, ~35% littoral zone requirement, ~65% open water. Sarasota County compliance authority.</p>
-          <p><strong>What we delivered:</strong> Full PDF deliverable with per-pond permit overlays, complete imagery archive, post-delivery follow-up window for label and composite clarifications, and the 2026 quote within the same week.</p>
-          <p><strong>Outcome:</strong> Engagement closed, paid through the management company, renewed for 2026 with expanded GIS work, and generated a referral to a neighboring HOA in the same county.</p>
-          <p class="case-study-quote">A board member's reaction at delivery, paraphrased with permission pending: there was more information in the visualization than they could digest in one sitting. The chair forwarded it to the rest of the committee for comment, then asked for the following year's quote within twenty-four hours.</p>
-        </article>
-        <aside class="case-study-card">
-          <h3>By the numbers</h3>
-          <dl>
-            <div><dt>Ponds flown</dt><dd>17</dd></div>
-            <div><dt>Compliance authority</dt><dd>Sarasota County</dd></div>
-            <div><dt>2025 contract</dt><dd>$1,500</dd></div>
-            <div><dt>2026 contract</dt><dd>$950 + GIS work</dd></div>
-            <div><dt>Outcome</dt><dd>Renewed, referred</dd></div>
-          </dl>
-        </aside>
+      <div class="case-stats">
+        <div class="case-stat"><span class="case-stat-num">17</span><span class="case-stat-label">Ponds flown</span></div>
+        <div class="case-stat"><span class="case-stat-num">$1,500</span><span class="case-stat-label">2025 engagement</span></div>
+        <div class="case-stat"><span class="case-stat-num">$950</span><span class="case-stat-label">2026, renewed</span></div>
+        <div class="case-stat"><span class="case-stat-num">7 days</span><span class="case-stat-label">To renewal request</span></div>
       </div>
-    </section>
 
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
+      <p class="case-summary">17 wet-detention ponds across Palmer Ranch, Sarasota County. Delivered September 2025, renewed for 2026 within a week, generated a referral to a neighboring HOA inside six months.</p>
+    </section>
 
     <section class="faq" id="faq">
      <div class="faq-inner">
-      <header class="section-head">
-        <span class="section-kicker">06 · Common Questions</span>
+      <header class="section-head section-head-tight">
+        <span class="section-kicker">06 · Common questions</span>
         <h2 class="section-title">What other boards have asked.</h2>
-        <p class="section-lede">These are the actual questions that have come back from HOAs we have engaged with, or that have been forwarded by board members evaluating the work for their own communities. Each one matters; each one has a clean answer.</p>
       </header>
 
       <div class="faq-list">
         <details class="faq-item">
           <summary>
-            <span class="faq-q">Will you do the full compliance interpretation, or just deliver imagery?</span>
+            <span class="faq-q">Will you do the full compliance interpretation?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-a">
-            <p>Both, depending on the engagement. Standard scope delivers the imagery and the permit overlay; the interpretation of compliance status is a conversation between your board, your pond manager, and the county. For boards that want a more analytical layer, we offer GIS overlay work that quantifies littoral coverage as a percentage of pond area and identifies year-over-year drift. We do not represent your community to the county. That role stays with your management company.</p>
+            <p>Standard scope is imaging and the permit overlay. The interpretation of compliance status remains a conversation between your board, your pond manager, and the county. GIS overlay analysis is an optional add-on. We do not represent your community to the county; that role stays with your management firm.</p>
           </div>
         </details>
         <details class="faq-item">
           <summary>
-            <span class="faq-q">Do you host the deliverables, or do we keep them?</span>
+            <span class="faq-q">Do we own the deliverables?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-a">
-            <p>Yours. Every PDF and every imagery archive is delivered to your management company directly, in a format your team can store on whatever document system you already use. We retain a copy for our own records and to support next year's flight, but your community is not locked into us. If you ever change vendors, your archive walks with you.</p>
+            <p>Yes. PDF and imagery archive go to your management firm directly. We keep a copy only to support next year's flight. If you change vendors, your archive walks with you.</p>
           </div>
         </details>
         <details class="faq-item">
           <summary>
-            <span class="faq-q">What do we need to communicate to residents about the drone activity?</span>
+            <span class="faq-q">What do residents need to know?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-a">
-            <p>Standard practice is a short notice circulated through whatever channel your board normally uses, sent two to three days before the scheduled flight window. We can supply a draft notice if your manager wants one. Residents are not photographed; the focus is on water and shoreline. Any incidental frames that capture a private home at recognizable resolution are cropped or blurred before delivery.</p>
+            <p>A short notice two to three days before the flight, sent through whatever channel your board normally uses. We can supply a draft. No homes are photographed at recognizable resolution; incidental frames are cropped or blurred before delivery.</p>
           </div>
         </details>
         <details class="faq-item">
           <summary>
-            <span class="faq-q">When is the best time of year and time of day to capture?</span>
+            <span class="faq-q">When is the best time to capture?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-a">
-            <p>Late summer through fall, after the wet season has loaded the system but before the winter dry-down compresses the data. Day-of, mid-morning is the sweet spot. 8 to 10 AM is when wind, glare, and thermal turbulence are all in the workable range. We aim for a calm, dry-following morning and reschedule when weather does not cooperate.</p>
+            <p>Late summer through fall, after the wet season has loaded the system. Day-of, 8 to 10 AM is the sweet spot for wind, glare, and thermal turbulence. We reschedule when weather does not cooperate.</p>
           </div>
         </details>
         <details class="faq-item">
           <summary>
-            <span class="faq-q">What is your experience with ponds and waterways specifically?</span>
+            <span class="faq-q">Are you Part 107 and insured?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-a">
-            <p>Active engagements with Florida HOAs in Sarasota County (Deer Creek Association, 17 ponds) and neighboring communities currently in conversation. We work in coordination with regional pond management firms and have completed photogrammetry-based work for the TREE Foundation's chapel hammock biome project, in collaboration with USF GIS. Pond-specific work is the studio's lead service, not a sideline.</p>
+            <p>Yes. FAA Part 107 current. $1M commercial liability through Skywatch. Certificate of Insurance issued to your management firm before any flight, listing your HOA and the management firm as additional insured.</p>
           </div>
         </details>
         <details class="faq-item">
           <summary>
-            <span class="faq-q">Are you Part 107 licensed and insured?</span>
+            <span class="faq-q">What about pricing year over year?</span>
             <span class="faq-toggle" aria-hidden="true">+</span>
           </summary>
           <div class="faq-a">
-            <p>Yes to both. FAA Part 107 Remote Pilot certified, current. $1M commercial liability through Skywatch. We issue a Certificate of Insurance to your management company before any flight, listing your HOA and the management firm as additional insured. Your management company can file the COI with payable accounts the same week.</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>
-            <span class="faq-q">What does pricing look like, and what changes year over year?</span>
-            <span class="faq-toggle" aria-hidden="true">+</span>
-          </summary>
-          <div class="faq-a">
-            <p>Pricing is per pond count, all-in, and the per-pond rate steps down once a community is on a recurring schedule. The first year carries the discovery and overlay-build cost; subsequent years use the same baseline maps and so price lower. The current per-pond schedule is published below, and on our home page. We are happy to put a written quote in front of your board before any commitment.</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>
-            <span class="faq-q">Will the deliverable be self-explanatory, or will we need a vendor to interpret it?</span>
-            <span class="faq-toggle" aria-hidden="true">+</span>
-          </summary>
-          <div class="faq-a">
-            <p>Self-explanatory by design. Every pond panel is labeled in plain English, with the original permit map alongside the current capture and a short summary in language a board member with no GIS background can read. We field follow-up questions from chairs and committee members for free in the weeks after delivery; that is part of the engagement, not a separate scope.</p>
+            <p>Per pond count, all-in. The first year carries the discovery and overlay-build cost; subsequent years use the same baseline maps and price lower. Schedule below; written quote on request before any commitment.</p>
           </div>
         </details>
       </div>
      </div>
     </section>
 
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
-
     <section class="product-section pricing-recap" id="pricing">
-      <header class="section-head">
+      <header class="section-head section-head-tight">
         <span class="section-kicker">07 · Pricing</span>
-        <h2 class="section-title">Per-pond, all-in, no surprises.</h2>
-        <p class="section-lede">The same per-pond schedule we publish on our home page. Your community pays once, by pond count, and the rate steps down on recurring engagements. GIS overlay analysis is itemized separately and is optional.</p>
+        <h2 class="section-title">Per pond, all-in.</h2>
       </header>
 
       <dl class="pricing-tier-grid">
@@ -401,47 +323,28 @@
       <p class="pricing-recap-note">Above 30 ponds, quoted per scope. Recurring communities receive a standing rate after the first visit.</p>
     </section>
 
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
-
-    <section class="product-section credentials" id="credentials">
-      <header class="section-head">
-        <span class="section-kicker">08 · On the Record</span>
-        <h2 class="section-title">Credentials and current work.</h2>
-      </header>
-
-      <dl class="credentials-list">
-        <div><dt>Certification</dt><dd>FAA Part 107 Remote Pilot</dd></div>
-        <div><dt>Insurance</dt><dd>$1M commercial liability via Skywatch</dd></div>
-        <div><dt>COI</dt><dd>Issued to your management company; HOA and firm listed as additional insured</dd></div>
-        <div><dt>Active engagement</dt><dd>Deer Creek Association, Sarasota · 17 ponds · 2025 delivered, 2026 contracted</dd></div>
-        <div><dt>In conversation</dt><dd>Neighboring HOA in Sarasota County, referred</dd></div>
-        <div><dt>Adjacent work</dt><dd>TREE Foundation chapel hammock biome restoration · USF GIS collaboration</dd></div>
-        <div><dt>Base of operations</dt><dd>Sarasota, FL</dd></div>
-        <div><dt>Service area</dt><dd>Ft. Myers · Sarasota · Tampa · Lakeland</dd></div>
-      </dl>
-    </section>
-
-    <div class="section-divider" aria-hidden="true">
-      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-        <path d="M0 20 Q 200 8, 400 20 T 800 20 T 1200 20 T 1600 20" fill="none" stroke="currentColor" stroke-width="1"/>
-      </svg>
-    </div>
-
-    <section class="product-section product-cta" id="next">
-      <header class="section-head">
-        <span class="section-kicker">09 · Next Step</span>
-        <h2 class="section-title">A discovery call, not a sales call.</h2>
-        <p class="section-lede">Most HOA engagements start the same way: a fifteen-minute conversation between your board contact, your pond manager, and us, scoping what would actually be useful for your community. There is no commitment at this stage and there is no charge.</p>
-      </header>
-
-      <div class="product-cta-row">
-        <a class="btn btn-primary" href="/#contact">Open the inquiry form</a>
-        <a class="btn btn-ghost" href="tel:+19417024287">Or call (941) 702-4287</a>
-        <span class="product-cta-note">Replies within one business day.</span>
+    <section class="product-section closing" id="next">
+      <div class="closing-grid">
+        <div class="closing-cta">
+          <span class="section-kicker">08 · Next step</span>
+          <h2 class="section-title">A discovery call.</h2>
+          <p class="section-lede">Fifteen minutes. Your board contact, your pond manager, and us. No commitment, no charge.</p>
+          <div class="product-cta-row">
+            <a class="btn btn-primary" href="/#contact">Open the inquiry form</a>
+            <a class="btn btn-ghost" href="tel:+19417024287">Or call (941) 702-4287</a>
+          </div>
+        </div>
+        <aside class="closing-credentials">
+          <h3>On the record</h3>
+          <ul>
+            <li>FAA Part 107 Remote Pilot</li>
+            <li>$1M commercial liability via Skywatch</li>
+            <li>COI to your management firm on file</li>
+            <li>Active: Deer Creek, Sarasota · 17 ponds</li>
+            <li>Adjacent: TREE Foundation × USF GIS</li>
+            <li>Base: Sarasota, FL · Service area: Ft. Myers to Tampa</li>
+          </ul>
+        </aside>
       </div>
     </section>
 
