@@ -117,4 +117,32 @@
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
+  /* ---------------- pond pricing calculator ---------------- */
+  const pondCalc = document.querySelector('[data-pond-calc]');
+  if (pondCalc) {
+    const slider = pondCalc.querySelector('[data-pond-slider]');
+    const countEl = pondCalc.querySelector('[data-pond-count]');
+    const priceEl = pondCalc.querySelector('[data-pond-price]');
+    const priceBlock = pondCalc.querySelector('[data-pond-price-block]');
+    const customBlock = pondCalc.querySelector('[data-pond-custom]');
+
+    const updateCalc = () => {
+      const n = parseInt(slider.value, 10);
+      if (n > 30) {
+        countEl.textContent = '30+';
+        priceBlock.setAttribute('data-hidden', '');
+        customBlock.setAttribute('data-active', '');
+      } else {
+        countEl.textContent = n;
+        priceBlock.removeAttribute('data-hidden');
+        customBlock.removeAttribute('data-active');
+        const price = 500 + Math.max(0, n - 3) * 50;
+        priceEl.textContent = '$' + price.toLocaleString();
+      }
+    };
+
+    slider.addEventListener('input', updateCalc);
+    updateCalc();
+  }
 })();
