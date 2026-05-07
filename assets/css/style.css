@@ -1061,6 +1061,63 @@ section {
   pointer-events: none;
 }
 
+.chapel-viewer-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  background: rgba(11, 20, 22, .82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(247, 246, 241, .18);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition: opacity .55s var(--e), transform .55s var(--e);
+}
+.chapel-viewer-hint.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.chapel-viewer-hint.is-hiding {
+  opacity: 0;
+  transform: translate(-50%, -4px);
+}
+.chapel-viewer-hint-kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--shallow);
+}
+.chapel-viewer-hint-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(247, 246, 241, .82);
+}
+
+@media (max-width: 700px) {
+  .chapel-viewer-hint {
+    bottom: 48px;
+    padding: 11px 14px;
+    max-width: calc(100% - 24px);
+    white-space: normal;
+  }
+  .chapel-viewer-hint-text {
+    font-size: 10px;
+    letter-spacing: .12em;
+  }
+}
+
 @media (max-width: 700px) {
   .chapel-viewer { aspect-ratio: 4 / 3; }
   .chapel-viewer-toggle {

@@ -28,6 +28,8 @@ class ChapelViewer {
     this.progressEl = container.querySelector('[data-chapel-progress]');
     this.statusEl = container.querySelector('[data-chapel-status]');
 
+    this.hintEl = container.querySelector('[data-chapel-hint]');
+
     this.mode = 'wireframe';
     this.initialized = false;
     this.loaded = false;
@@ -40,6 +42,9 @@ class ChapelViewer {
     this.tourModeStartTime = 0;
     this.tourCycleStartedFromIndex = 0;
     this.lastFrameTime = 0;
+    this.hintTimeoutId = null;
+    this.hintShown = false;
+    this.hintHiding = false;
 
     // Fade targets (instant by default; overridden during transitions)
     this.texturedTargetOpacity = 0;
@@ -85,8 +90,8 @@ class ChapelViewer {
     this.controls.maxDistance = 600;
     this.controls.target.set(0, 0, 0);
 
-    // Any user input on the canvas ends the auto-tour
-    this.controls.addEventListener('start', () => this.endAutoTour());
+    // Any user input on the canvas ends the auto-tour and hides the hint
+    this.controls.addEventListener('start', () => this.handleUserInteraction());
 
     // Resize handling
     this.resize = this.resize.bind(this);
@@ -211,18 +216,21 @@ class ChapelViewer {
     const fov = this.camera.fov * (Math.PI / 180);
     const dist = (horizontal / 2) / Math.tan(fov / 2) * 0.48;
 
-    // Pivot the orbit slightly above ground so the camera sweeps the
-    // chapel rooftops rather than rotating around something below them.
+    // Pivot the orbit at the model's mid-height so the camera looks
+    // at the property roughly straight on, not down at it.
     this.controls.target.copy(center);
-    this.controls.target.y = center.y + vertical * 0.45;
+    this.controls.target.y = center.y + vertical * 0.5;
 
-    // Place the camera at a 3/4 corner of the property, at a moderate
-    // altitude relative to the model height. minimum 30m so the angle
-    // still reads as aerial on very short structures.
+    // Place the camera at a 3/4 corner of the property, low enough above
+    // the model to read as a near-horizontal pass rather than a top-down
+    // survey. The earlier altitude (vertical * 1.4 with a 30m floor)
+    // made the auto-orbit feel too much like looking down at a model;
+    // this angle reads more like a drone holding eye-level with the
+    // property edges.
     const startAngle = Math.PI / 4;
     const camOffsetX = Math.cos(startAngle) * dist;
     const camOffsetZ = Math.sin(startAngle) * dist;
-    const camOffsetY = Math.max(vertical * 1.4, 30);
+    const camOffsetY = Math.max(vertical * 0.7, 15);
     this.camera.position.set(
       center.x + camOffsetX,
       center.y + camOffsetY,
@@ -248,7 +256,7 @@ class ChapelViewer {
       btn.classList.toggle('is-active', btn.dataset.chapelMode === mode);
     });
     this.applyMode();
-    if (!opts.silent) this.endAutoTour();
+    if (!opts.silent) this.handleUserInteraction();
   }
 
   applyMode(opts = {}) {
@@ -293,6 +301,43 @@ class ChapelViewer {
     this.container.classList.remove('chapel-viewer-touring');
     // The animate loop will ramp tourSpeed -> 0 and disable autoRotate
     // when it reaches zero, so the orbit eases to a stop.
+  }
+
+  // Called when the trailer reaches its closing wireframe shot. The
+  // orbit stops the same way as a user interaction would, but a
+  // controls hint is shown after the wireframe fade-in lands.
+  completeTour() {
+    this.tourActive = false;
+    this.tourSpeedTarget = 0;
+    this.container.classList.remove('chapel-viewer-touring');
+    if (this.hintTimeoutId) clearTimeout(this.hintTimeoutId);
+    this.hintTimeoutId = setTimeout(() => this.showHint(), 1600);
+  }
+
+  // Any user input ends the tour and dismisses the hint. Cancels any
+  // pending hint reveal if the user starts moving before it can show.
+  handleUserInteraction() {
+    if (this.hintTimeoutId) {
+      clearTimeout(this.hintTimeoutId);
+      this.hintTimeoutId = null;
+    }
+    this.endAutoTour();
+    this.hideHint();
+  }
+
+  showHint() {
+    if (!this.hintEl || this.hintShown) return;
+    this.hintEl.classList.add('is-visible');
+    this.hintShown = true;
+  }
+
+  hideHint() {
+    if (!this.hintEl || !this.hintShown || this.hintHiding) return;
+    this.hintHiding = true;
+    this.hintEl.classList.add('is-hiding');
+    setTimeout(() => {
+      if (this.hintEl) this.hintEl.style.display = 'none';
+    }, 600);
   }
 
   tourModeOrder() {
@@ -357,9 +402,8 @@ class ChapelViewer {
 
     // While the tour is active, advance the mode cycle on a schedule.
     // The cycle plays once: wireframe -> overlay -> textured -> wireframe,
-    // then stops advancing. The orbit keeps rotating until the user
-    // takes control. Ending on wireframe gives the trailer a clean
-    // bookend that mirrors the entry shot.
+    // then settles. When it reaches the closing wireframe shot, the
+    // orbit eases to a stop and a controls hint is revealed.
     if (this.tourActive && this.tourModeStartTime) {
       const elapsed = now - this.tourModeStartTime;
       if (elapsed >= TOUR_MODE_DURATION) {
@@ -367,6 +411,7 @@ class ChapelViewer {
         if (nextIndex >= this.tourModeOrder().length) {
           this.setMode(this.tourModeOrder()[0], { silent: true });
           this.tourModeStartTime = 0;
+          this.completeTour();
         } else {
           this.tourModeIndex = nextIndex;
           this.tourModeStartTime = now;
