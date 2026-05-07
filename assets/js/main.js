@@ -118,6 +118,43 @@
     }
   }
 
+  /* ---------------- case study gallery ---------------- */
+  const galleries = document.querySelectorAll('[data-gallery]');
+  galleries.forEach((gallery) => {
+    const track = gallery.querySelector('[data-gallery-track]');
+    const prev = gallery.querySelector('[data-gallery-prev]');
+    const next = gallery.querySelector('[data-gallery-next]');
+    const currentEl = gallery.querySelector('[data-gallery-current]');
+    const totalEl = gallery.querySelector('[data-gallery-total]');
+    if (!track || !prev || !next) return;
+    const slides = track.children;
+    const total = slides.length;
+    let idx = 0;
+
+    const update = () => {
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      if (currentEl) currentEl.textContent = idx + 1;
+      if (totalEl) totalEl.textContent = total;
+      prev.disabled = idx === 0;
+      next.disabled = idx === total - 1;
+    };
+
+    prev.addEventListener('click', () => {
+      if (idx > 0) { idx--; update(); }
+    });
+    next.addEventListener('click', () => {
+      if (idx < total - 1) { idx++; update(); }
+    });
+
+    gallery.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && idx > 0) { idx--; update(); }
+      if (e.key === 'ArrowRight' && idx < total - 1) { idx++; update(); }
+    });
+    gallery.tabIndex = 0;
+
+    update();
+  });
+
   /* ---------------- pond pricing calculator ---------------- */
   const pondCalc = document.querySelector('[data-pond-calc]');
   if (pondCalc) {
