@@ -13,11 +13,11 @@ const MODES = ['wireframe', 'overlay', 'textured'];
 
 // Tour parameters
 const TOUR_START_DELAY = 800;          // ms after load before tour begins
-const TOUR_MODE_DURATION = 4500;       // ms each mode holds before cycling (faster, ~13.5s for full cycle)
+const TOUR_MODE_DURATION = 4500;       // ms each mode holds before cycling
 const TOUR_RAMP_UP = 2.0;              // seconds for orbit speed to reach full
 const TOUR_RAMP_DOWN = 1.4;            // seconds for orbit speed to ease to zero
 const TOUR_AUTO_ROTATE_SPEED = 0.85;   // OrbitControls units; lower = slower (default 2.0 = 30s/orbit, so 0.85 ~ 70s/orbit)
-const FADE_RATE = 0.05;                // per frame, how fast opacities lerp to targets (lower = slower, more visible cross-fade ~0.85s)
+const FADE_RATE = 0.03;                // per frame, how fast opacities lerp to targets (lower = slower, ~1.4s cross-fade)
 
 class ChapelViewer {
   constructor(container) {
@@ -209,7 +209,7 @@ class ChapelViewer {
     const vertical = Math.max(size.y, 1);
 
     const fov = this.camera.fov * (Math.PI / 180);
-    const dist = (horizontal / 2) / Math.tan(fov / 2) * 0.95;
+    const dist = (horizontal / 2) / Math.tan(fov / 2) * 0.48;
 
     // Pivot the orbit slightly above ground so the camera sweeps the
     // chapel rooftops rather than rotating around something below them.
@@ -355,13 +355,23 @@ class ChapelViewer {
       }
     }
 
-    // While the tour is active, advance the mode cycle on a schedule
+    // While the tour is active, advance the mode cycle on a schedule.
+    // The cycle plays once: wireframe -> overlay -> textured -> wireframe,
+    // then stops advancing. The orbit keeps rotating until the user
+    // takes control. Ending on wireframe gives the trailer a clean
+    // bookend that mirrors the entry shot.
     if (this.tourActive && this.tourModeStartTime) {
       const elapsed = now - this.tourModeStartTime;
       if (elapsed >= TOUR_MODE_DURATION) {
-        this.tourModeIndex = (this.tourModeIndex + 1) % this.tourModeOrder().length;
-        this.tourModeStartTime = now;
-        this.setMode(this.tourModeOrder()[this.tourModeIndex], { silent: true });
+        const nextIndex = this.tourModeIndex + 1;
+        if (nextIndex >= this.tourModeOrder().length) {
+          this.setMode(this.tourModeOrder()[0], { silent: true });
+          this.tourModeStartTime = 0;
+        } else {
+          this.tourModeIndex = nextIndex;
+          this.tourModeStartTime = now;
+          this.setMode(this.tourModeOrder()[nextIndex], { silent: true });
+        }
       }
     }
 
