@@ -632,15 +632,34 @@
         <div class="work-feature-head">
           <span class="work-feature-eyebrow">Sample · Siesta Key Chapel</span>
           <h3 class="work-feature-title">Inside the survey.</h3>
-          <p class="work-feature-lede">652 frames stitched into a textured 3D mesh. Drag to rotate, scroll to zoom, double-click to focus.</p>
+          <p class="work-feature-lede">A photogrammetry mesh built from 652 drone frames. Drag to rotate, scroll to zoom, and use the toggle to switch between the wireframe survey view, the textured deliverable, and a hybrid overlay.</p>
         </div>
-        <div class="work-feature-frame">
-          <iframe
-            title="Siesta Key Chapel · Tree Foundation"
-            src="https://sketchfab.com/models/7f28a89987fb49048c5be09cc8a310ad/embed"
-            loading="lazy"
-            allow="autoplay; fullscreen; xr-spatial-tracking"
-            allowfullscreen></iframe>
+
+        <div class="chapel-viewer" data-chapel-viewer>
+          <canvas class="chapel-viewer-canvas" data-chapel-canvas></canvas>
+
+          <div class="chapel-viewer-toggle" role="group" aria-label="Render mode">
+            <button class="chapel-viewer-mode-btn is-active" type="button" data-chapel-mode="wireframe">Wireframe</button>
+            <button class="chapel-viewer-mode-btn" type="button" data-chapel-mode="overlay">Overlay</button>
+            <button class="chapel-viewer-mode-btn" type="button" data-chapel-mode="textured">Textured</button>
+          </div>
+
+          <div class="chapel-viewer-meta" aria-hidden="true">
+            <span>Siesta Key Chapel</span>
+            <span>250K vertices · 500K faces</span>
+            <span>Drag · Zoom · Pan</span>
+          </div>
+
+          <div class="chapel-viewer-loading" data-chapel-loading>
+            <div class="chapel-viewer-loading-inner">
+              <span class="chapel-viewer-loading-kicker">Loading 3D mesh</span>
+              <span class="chapel-viewer-loading-status" data-chapel-status>Preparing...</span>
+              <div class="chapel-viewer-loading-bar">
+                <div class="chapel-viewer-loading-bar-fill" data-chapel-progress></div>
+              </div>
+              <span class="chapel-viewer-loading-note">~27 MB · streamed once, cached after</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -925,5 +944,6 @@
   </footer>
 
   <script src="/assets/js/main.js" defer></script>
+  <script type="module" src="/assets/js/chapel-viewer.js"></script>
 </body>
 </html>
