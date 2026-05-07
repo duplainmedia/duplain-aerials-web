@@ -1,13 +1,37 @@
 [build]
   publish = "."
 
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
+# Default for all paths: always revalidate against the server (cheap
+# 304 Not Modified responses via ETag) so updates are picked up
+# immediately, plus the security headers we want everywhere.
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Images: a day of safe caching with revalidation. These rarely change
+# once uploaded and are large enough that re-fetching every load is
+# wasteful.
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+# 3D models: same rationale as images, just bigger files.
+[[headers]]
+  for = "/assets/models/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+# Favicon and OG image: a week of caching, both basically static.
+[[headers]]
+  for = "/assets/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
+  for = "/assets/og-image.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, must-revalidate"
