@@ -65,17 +65,6 @@
     </defs>
   </svg>
 
-  <div class="reticle" aria-hidden="true">
-    <svg viewBox="0 0 60 60">
-      <circle cx="30" cy="30" r="18" fill="none" stroke="currentColor" stroke-width=".8"/>
-      <circle cx="30" cy="30" r="1.2" fill="currentColor"/>
-      <line x1="30" y1="6" x2="30" y2="18" stroke="currentColor" stroke-width=".8"/>
-      <line x1="30" y1="42" x2="30" y2="54" stroke="currentColor" stroke-width=".8"/>
-      <line x1="6" y1="30" x2="18" y2="30" stroke="currentColor" stroke-width=".8"/>
-      <line x1="42" y1="30" x2="54" y2="30" stroke="currentColor" stroke-width=".8"/>
-    </svg>
-  </div>
-
   <aside class="altitude" aria-hidden="true">
     <span class="altitude-label">AGL</span>
     <span class="altitude-value" data-altitude>400</span>
@@ -257,64 +246,65 @@
       <div class="hero-drone-shadow" aria-hidden="true"></div>
 
       <div class="hero-drone" aria-hidden="true">
-        <svg viewBox="0 0 140 100" class="drone-svg">
+        <svg viewBox="0 0 200 120" class="drone-svg">
           <g class="drone-prop-rings">
-            <circle cx="24" cy="30" r="17"/>
-            <circle cx="116" cy="30" r="17"/>
-            <circle cx="24" cy="70" r="17"/>
-            <circle cx="116" cy="70" r="17"/>
+            <ellipse cx="40" cy="88" rx="22" ry="5.5"/>
+            <ellipse cx="160" cy="88" rx="22" ry="5.5"/>
+            <ellipse cx="62" cy="40" rx="17" ry="4.5"/>
+            <ellipse cx="138" cy="40" rx="17" ry="4.5"/>
           </g>
 
           <g class="drone-arms">
-            <path d="M52 44 L24 30 L24 34 L54 48 Z"/>
-            <path d="M88 44 L116 30 L116 34 L86 48 Z"/>
-            <path d="M52 56 L24 70 L24 66 L54 52 Z"/>
-            <path d="M88 56 L116 70 L116 66 L86 52 Z"/>
+            <path d="M88 65 L40 88 L42 92 L92 69 Z"/>
+            <path d="M112 65 L160 88 L158 92 L108 69 Z"/>
+            <path d="M90 58 L62 40 L64 44 L92 62 Z"/>
+            <path d="M110 58 L138 40 L136 44 L108 62 Z"/>
           </g>
 
-          <g class="drone-prop drone-prop-1" style="transform-origin: 24px 30px;">
-            <line x1="24" y1="14" x2="24" y2="46"/>
-            <line x1="8" y1="30" x2="40" y2="30"/>
+          <g class="drone-prop drone-prop-1" style="transform-origin: 40px 88px;">
+            <line x1="22" y1="88" x2="58" y2="88"/>
+            <line x1="40" y1="83" x2="40" y2="93"/>
           </g>
-          <g class="drone-prop drone-prop-2" style="transform-origin: 116px 30px;">
-            <line x1="116" y1="14" x2="116" y2="46"/>
-            <line x1="100" y1="30" x2="132" y2="30"/>
+          <g class="drone-prop drone-prop-2" style="transform-origin: 160px 88px;">
+            <line x1="142" y1="88" x2="178" y2="88"/>
+            <line x1="160" y1="83" x2="160" y2="93"/>
           </g>
-          <g class="drone-prop drone-prop-3" style="transform-origin: 24px 70px;">
-            <line x1="24" y1="54" x2="24" y2="86"/>
-            <line x1="8" y1="70" x2="40" y2="70"/>
+          <g class="drone-prop drone-prop-3" style="transform-origin: 62px 40px;">
+            <line x1="48" y1="40" x2="76" y2="40"/>
+            <line x1="62" y1="36" x2="62" y2="44"/>
           </g>
-          <g class="drone-prop drone-prop-4" style="transform-origin: 116px 70px;">
-            <line x1="116" y1="54" x2="116" y2="86"/>
-            <line x1="100" y1="70" x2="132" y2="70"/>
+          <g class="drone-prop drone-prop-4" style="transform-origin: 138px 40px;">
+            <line x1="124" y1="40" x2="152" y2="40"/>
+            <line x1="138" y1="36" x2="138" y2="44"/>
           </g>
 
           <g class="drone-motors">
-            <circle cx="24" cy="30" r="4.2"/>
-            <circle cx="116" cy="30" r="4.2"/>
-            <circle cx="24" cy="70" r="4.2"/>
-            <circle cx="116" cy="70" r="4.2"/>
+            <ellipse cx="40" cy="88" rx="5.5" ry="4"/>
+            <ellipse cx="160" cy="88" rx="5.5" ry="4"/>
+            <ellipse cx="62" cy="40" rx="4.5" ry="3.3"/>
+            <ellipse cx="138" cy="40" rx="4.5" ry="3.3"/>
           </g>
           <g class="drone-motors-inner">
-            <circle cx="24" cy="30" r="1.6"/>
-            <circle cx="116" cy="30" r="1.6"/>
-            <circle cx="24" cy="70" r="1.6"/>
-            <circle cx="116" cy="70" r="1.6"/>
+            <ellipse cx="40" cy="86.5" rx="3.5" ry="2"/>
+            <ellipse cx="160" cy="86.5" rx="3.5" ry="2"/>
+            <ellipse cx="62" cy="39.2" rx="2.8" ry="1.5"/>
+            <ellipse cx="138" cy="39.2" rx="2.8" ry="1.5"/>
           </g>
 
-          <path class="drone-body" d="M52 40 L88 40 L96 50 L88 60 L52 60 L44 50 Z"/>
-          <path class="drone-body-inner" d="M58 45 L82 45 L87 50 L82 55 L58 55 L53 50 Z"/>
-          <rect class="drone-body-stripe" x="55" y="49" width="30" height="2" rx=".5"/>
+          <path class="drone-body" d="M85 56 L115 56 L124 65 L115 75 L85 75 L76 65 Z"/>
+          <path class="drone-body-front" d="M85 75 L115 75 L118 79 L82 79 Z"/>
+          <path class="drone-body-inner" d="M89 60 L111 60 L118 65 L111 71 L89 71 L82 65 Z"/>
+          <rect class="drone-body-stripe" x="89" y="64.5" width="22" height="1.6" rx=".4"/>
 
-          <circle class="drone-gimbal-mount" cx="70" cy="60" r="2.4"/>
-          <circle class="drone-gimbal" cx="70" cy="64" r="4"/>
-          <circle class="drone-gimbal-lens" cx="70" cy="64" r="2.2"/>
-          <circle class="drone-gimbal-glint" cx="71" cy="63" r=".8"/>
+          <rect class="drone-gimbal-arm" x="98.5" y="78" width="3" height="6"/>
+          <ellipse class="drone-gimbal" cx="100" cy="89" rx="6" ry="4.5"/>
+          <ellipse class="drone-gimbal-lens" cx="100" cy="89" rx="3.5" ry="2.5"/>
+          <ellipse class="drone-gimbal-glint" cx="101" cy="88" rx="1.2" ry=".8"/>
 
-          <circle class="nav-light nav-front-l" cx="24" cy="20" r="1.4"/>
-          <circle class="nav-light nav-front-r" cx="116" cy="20" r="1.4"/>
-          <circle class="nav-light nav-rear-l" cx="24" cy="80" r="1.4"/>
-          <circle class="nav-light nav-rear-r" cx="116" cy="80" r="1.4"/>
+          <circle class="nav-light nav-front-l" cx="40" cy="88" r="1.3"/>
+          <circle class="nav-light nav-front-r" cx="160" cy="88" r="1.3"/>
+          <circle class="nav-light nav-rear-l" cx="62" cy="40" r="1.1"/>
+          <circle class="nav-light nav-rear-r" cx="138" cy="40" r="1.1"/>
         </svg>
       </div>
 
@@ -325,7 +315,7 @@
           <em>from above.</em>
         </h1>
         <p class="lede">
-          We fly drone surveys for HOAs across Southwest Florida. Most of our work is shoreline and retention-pond documentation, the kind of record your board is often required to keep but is difficult to produce from the ground. The result is a dated visual archive your community, your lake-management vendor, and your compliance file can all work from.
+          Aerial imaging for Southwest Florida properties. Most of our work is pond and littoral-zone documentation for HOAs, but we also fly construction progress, commercial real estate, mapping, and editorial photography for property and brand teams. The approach across all of it is the same: clean, dated, repeatable imagery that your team can actually use.
         </p>
         <div class="hero-meta">
           <span class="meta-chip"><svg class="ico" viewBox="0 0 40 40"><use href="#i-propeller"/></svg>FAA Part 107</span>
@@ -333,7 +323,7 @@
           <span class="meta-chip"><svg class="ico" viewBox="0 0 40 40"><use href="#i-compass"/></svg>Ft. Myers → Tampa</span>
         </div>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#contact">Request a survey</a>
+          <a class="btn btn-primary" href="#contact">Start a project</a>
           <a class="btn btn-ghost" href="#services">See services</a>
         </div>
       </div>
@@ -504,7 +494,12 @@
           </header>
           <h3>Littoral Zone Imaging</h3>
           <p>Florida law requires most HOAs to maintain the native shoreline vegetation around retention ponds, and documenting that vegetation well is harder than it sounds. Shorelines are overgrown, water-bordered, or fenced off, and walking them for photos takes hours that your property manager does not have. We fly the full perimeter of each pond at consistent altitude and hand back a dated visual record: the kind of evidence your lake-management vendor uses to plan treatment, your board references at the annual meeting, and your manager files when the county or insurance asks.</p>
-          <p class="service-deeplink"><a href="/hoa-pond-imaging/">Read the full HOA pond imaging workflow <span aria-hidden="true">›</span></a></p>
+          <a class="service-cta" href="/hoa-pond-imaging/">
+            <span class="service-cta-label">See the full HOA pond imaging workflow</span>
+            <svg class="service-cta-arrow" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12 L19 12 M14 6 L20 12 L14 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
           <ul class="service-tags">
             <li>Retention ponds</li>
             <li>Invasive species</li>

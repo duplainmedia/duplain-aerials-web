@@ -332,7 +332,8 @@ button, input, select, textarea {
 
 .drone-shadow { fill: var(--ink); opacity: .1; }
 
-.drone-prop-rings circle {
+.drone-prop-rings circle,
+.drone-prop-rings ellipse {
   fill: none;
   stroke: var(--ink);
   stroke-width: .4;
@@ -357,13 +358,17 @@ button, input, select, textarea {
   to { transform: rotate(360deg); }
 }
 
-.drone-motors circle { fill: var(--ink); }
-.drone-motors-inner circle { fill: var(--sand); opacity: .5; }
+.drone-motors circle,
+.drone-motors ellipse { fill: var(--ink); }
+.drone-motors-inner circle,
+.drone-motors-inner ellipse { fill: var(--sand); opacity: .5; }
 
 .drone-body { fill: var(--ink); }
+.drone-body-front { fill: var(--ink-soft); opacity: .9; }
 .drone-body-inner { fill: var(--ink-soft); opacity: .55; }
 .drone-body-stripe { fill: var(--shallow); opacity: .8; }
 
+.drone-gimbal-arm { fill: var(--ink); }
 .drone-gimbal-mount { fill: var(--ink); }
 .drone-gimbal { fill: var(--ink-soft); }
 .drone-gimbal-lens { fill: var(--gulf); }
@@ -674,26 +679,39 @@ section {
   max-width: 560px;
 }
 
-.service-deeplink {
-  margin: 18px 0 0;
+.service-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 26px 0 4px;
+  padding: 16px 24px;
+  background: var(--ink);
+  color: var(--paper);
   font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: .14em;
   text-transform: uppercase;
+  border: 1px solid var(--ink);
+  transition: background .25s var(--e), color .25s var(--e), border-color .25s var(--e), transform .2s var(--e);
 }
-.service-deeplink a {
-  color: var(--gulf);
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 2px;
-  transition: color .2s var(--e);
+.service-cta:hover {
+  background: var(--gulf-deep);
+  border-color: var(--gulf-deep);
+  color: var(--paper);
+  transform: translateX(2px);
 }
-.service-deeplink a:hover { color: var(--gulf-deep); }
-.service-deeplink span {
-  display: inline-block;
-  margin-left: 4px;
-  transition: transform .2s var(--e);
+.service-cta-label {
+  line-height: 1;
 }
-.service-deeplink a:hover span { transform: translateX(3px); }
+.service-cta-arrow {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform .25s var(--e);
+}
+.service-cta:hover .service-cta-arrow {
+  transform: translateX(4px);
+}
 
 .service-tags {
   list-style: none;
