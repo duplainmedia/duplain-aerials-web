@@ -246,72 +246,120 @@
       <div class="hero-drone-shadow" aria-hidden="true"></div>
 
       <div class="hero-drone" aria-hidden="true">
-        <svg viewBox="0 0 200 120" class="drone-svg">
+        <svg viewBox="0 0 220 140" class="drone-svg">
+          <!-- Faint ground shadow to anchor the form in space -->
+          <ellipse class="drone-shadow" cx="110" cy="128" rx="62" ry="4.5"/>
+
+          <!-- Spinning prop motion-blur discs -->
           <g class="drone-prop-rings">
-            <ellipse cx="40" cy="88" rx="22" ry="5.5"/>
-            <ellipse cx="160" cy="88" rx="22" ry="5.5"/>
-            <ellipse cx="62" cy="40" rx="17" ry="4.5"/>
-            <ellipse cx="138" cy="40" rx="17" ry="4.5"/>
+            <ellipse cx="50" cy="92" rx="22" ry="5.2"/>
+            <ellipse cx="170" cy="92" rx="22" ry="5.2"/>
+            <ellipse cx="68" cy="42" rx="17" ry="4.2"/>
+            <ellipse cx="152" cy="42" rx="17" ry="4.2"/>
           </g>
 
+          <!-- Arms drawn as 3D rods (top face + thin shadow strip below) -->
           <g class="drone-arms">
-            <path d="M88 65 L40 88 L42 92 L92 69 Z"/>
-            <path d="M112 65 L160 88 L158 92 L108 69 Z"/>
-            <path d="M90 58 L62 40 L64 44 L92 62 Z"/>
-            <path d="M110 58 L138 40 L136 44 L108 62 Z"/>
+            <!-- Front-left arm -->
+            <g>
+              <path d="M96 68 L50 90 L52 94 L98 72 Z" class="drone-arm-shadow"/>
+              <path d="M96 66 L50 88 L52 92 L98 70 Z" class="drone-arm-top"/>
+            </g>
+            <!-- Front-right arm -->
+            <g>
+              <path d="M124 68 L170 90 L168 94 L122 72 Z" class="drone-arm-shadow"/>
+              <path d="M124 66 L170 88 L168 92 L122 70 Z" class="drone-arm-top"/>
+            </g>
+            <!-- Back-left arm -->
+            <g>
+              <path d="M99 60 L68 42 L70 46 L101 64 Z" class="drone-arm-shadow"/>
+              <path d="M99 58 L68 40 L70 44 L101 62 Z" class="drone-arm-top"/>
+            </g>
+            <!-- Back-right arm -->
+            <g>
+              <path d="M121 60 L152 42 L150 46 L119 64 Z" class="drone-arm-shadow"/>
+              <path d="M121 58 L152 40 L150 44 L119 62 Z" class="drone-arm-top"/>
+            </g>
           </g>
 
-          <g class="drone-prop drone-prop-1" style="transform-origin: 40px 88px;">
-            <line x1="22" y1="88" x2="58" y2="88"/>
-            <line x1="40" y1="83" x2="40" y2="93"/>
+          <!-- Spinning prop crosshairs (animated) -->
+          <g class="drone-prop drone-prop-1" style="transform-origin: 50px 90px;">
+            <line x1="32" y1="90" x2="68" y2="90"/>
+            <line x1="50" y1="84" x2="50" y2="96"/>
           </g>
-          <g class="drone-prop drone-prop-2" style="transform-origin: 160px 88px;">
-            <line x1="142" y1="88" x2="178" y2="88"/>
-            <line x1="160" y1="83" x2="160" y2="93"/>
+          <g class="drone-prop drone-prop-2" style="transform-origin: 170px 90px;">
+            <line x1="152" y1="90" x2="188" y2="90"/>
+            <line x1="170" y1="84" x2="170" y2="96"/>
           </g>
-          <g class="drone-prop drone-prop-3" style="transform-origin: 62px 40px;">
-            <line x1="48" y1="40" x2="76" y2="40"/>
-            <line x1="62" y1="36" x2="62" y2="44"/>
+          <g class="drone-prop drone-prop-3" style="transform-origin: 68px 40px;">
+            <line x1="53" y1="40" x2="83" y2="40"/>
+            <line x1="68" y1="35" x2="68" y2="45"/>
           </g>
-          <g class="drone-prop drone-prop-4" style="transform-origin: 138px 40px;">
-            <line x1="124" y1="40" x2="152" y2="40"/>
-            <line x1="138" y1="36" x2="138" y2="44"/>
+          <g class="drone-prop drone-prop-4" style="transform-origin: 152px 40px;">
+            <line x1="137" y1="40" x2="167" y2="40"/>
+            <line x1="152" y1="35" x2="152" y2="45"/>
           </g>
 
+          <!-- Motors as 3D pucks: side wall + top disc + inner highlight -->
           <g class="drone-motors">
-            <ellipse cx="40" cy="88" rx="5.5" ry="4"/>
-            <ellipse cx="160" cy="88" rx="5.5" ry="4"/>
-            <ellipse cx="62" cy="40" rx="4.5" ry="3.3"/>
-            <ellipse cx="138" cy="40" rx="4.5" ry="3.3"/>
+            <!-- Front-left -->
+            <rect class="drone-motor-wall" x="44" y="90" width="12" height="3.5"/>
+            <ellipse class="drone-motor-top" cx="50" cy="90" rx="6" ry="3.2"/>
+            <ellipse class="drone-motor-inner" cx="50" cy="89.4" rx="3.3" ry="1.7"/>
+            <!-- Front-right -->
+            <rect class="drone-motor-wall" x="164" y="90" width="12" height="3.5"/>
+            <ellipse class="drone-motor-top" cx="170" cy="90" rx="6" ry="3.2"/>
+            <ellipse class="drone-motor-inner" cx="170" cy="89.4" rx="3.3" ry="1.7"/>
+            <!-- Back-left -->
+            <rect class="drone-motor-wall" x="63" y="40" width="10" height="2.6"/>
+            <ellipse class="drone-motor-top" cx="68" cy="40" rx="5" ry="2.6"/>
+            <ellipse class="drone-motor-inner" cx="68" cy="39.5" rx="2.7" ry="1.4"/>
+            <!-- Back-right -->
+            <rect class="drone-motor-wall" x="147" y="40" width="10" height="2.6"/>
+            <ellipse class="drone-motor-top" cx="152" cy="40" rx="5" ry="2.6"/>
+            <ellipse class="drone-motor-inner" cx="152" cy="39.5" rx="2.7" ry="1.4"/>
           </g>
-          <g class="drone-motors-inner">
-            <ellipse cx="40" cy="86.5" rx="3.5" ry="2"/>
-            <ellipse cx="160" cy="86.5" rx="3.5" ry="2"/>
-            <ellipse cx="62" cy="39.2" rx="2.8" ry="1.5"/>
-            <ellipse cx="138" cy="39.2" rx="2.8" ry="1.5"/>
+
+          <!-- Body: hexagonal puck shown with side walls + front face + lit top -->
+          <!-- Side walls (sit behind so the lit top covers the inner edges) -->
+          <path class="drone-body-side" d="M85 55 L94 49 L94 73 L85 67 Z"/>
+          <path class="drone-body-side" d="M135 55 L126 49 L126 73 L135 67 Z"/>
+          <!-- Front face strip -->
+          <path class="drone-body-front" d="M94 70 L126 70 L132 76 L88 76 Z"/>
+          <!-- Top face -->
+          <path class="drone-body" d="M94 49 L126 49 L135 61 L126 70 L94 70 L85 61 Z"/>
+          <!-- Top inset highlight -->
+          <path class="drone-body-inner" d="M98 53 L122 53 L130 61 L122 67 L98 67 L90 61 Z"/>
+          <!-- LED stripe -->
+          <rect class="drone-body-stripe" x="98" y="59.6" width="24" height="1.6" rx=".4"/>
+
+          <!-- Antenna stubs on top -->
+          <g class="drone-antennas">
+            <line x1="105" y1="49" x2="105" y2="44"/>
+            <line x1="115" y1="49" x2="115" y2="44"/>
+            <circle cx="105" cy="44" r=".9"/>
+            <circle cx="115" cy="44" r=".9"/>
           </g>
 
-          <path class="drone-body" d="M85 56 L115 56 L124 65 L115 75 L85 75 L76 65 Z"/>
-          <path class="drone-body-front" d="M85 75 L115 75 L118 79 L82 79 Z"/>
-          <path class="drone-body-inner" d="M89 60 L111 60 L118 65 L111 71 L89 71 L82 65 Z"/>
-          <rect class="drone-body-stripe" x="89" y="64.5" width="22" height="1.6" rx=".4"/>
+          <!-- Gimbal: short mount arm + sphere body + lens + glint -->
+          <rect class="drone-gimbal-arm" x="106" y="76" width="8" height="3"/>
+          <circle class="drone-gimbal-mount" cx="110" cy="80" r="2.4"/>
+          <circle class="drone-gimbal" cx="110" cy="88" r="6"/>
+          <circle class="drone-gimbal-lens" cx="110" cy="88" r="3.6"/>
+          <circle class="drone-gimbal-glint" cx="112" cy="86.4" r="1.1"/>
 
-          <rect class="drone-gimbal-arm" x="98.5" y="78" width="3" height="6"/>
-          <ellipse class="drone-gimbal" cx="100" cy="89" rx="6" ry="4.5"/>
-          <ellipse class="drone-gimbal-lens" cx="100" cy="89" rx="3.5" ry="2.5"/>
-          <ellipse class="drone-gimbal-glint" cx="101" cy="88" rx="1.2" ry=".8"/>
-
-          <circle class="nav-light nav-front-l" cx="40" cy="88" r="1.3"/>
-          <circle class="nav-light nav-front-r" cx="160" cy="88" r="1.3"/>
-          <circle class="nav-light nav-rear-l" cx="62" cy="40" r="1.1"/>
-          <circle class="nav-light nav-rear-r" cx="138" cy="40" r="1.1"/>
+          <!-- Nav lights (still pulse) -->
+          <circle class="nav-light nav-front-l" cx="50" cy="90" r="1.2"/>
+          <circle class="nav-light nav-front-r" cx="170" cy="90" r="1.2"/>
+          <circle class="nav-light nav-rear-l" cx="68" cy="40" r="1.0"/>
+          <circle class="nav-light nav-rear-r" cx="152" cy="40" r="1.0"/>
         </svg>
       </div>
 
       <div class="hero-inner">
         <p class="eyebrow"><span class="eyebrow-dot"></span>Southwest Florida · Est. Sarasota</p>
         <h1 class="display">
-          Evidence,
+          Imaging,
           <em>from above.</em>
         </h1>
         <p class="lede">
@@ -506,20 +554,6 @@
             <li>Treatment records</li>
             <li>Board reporting</li>
           </ul>
-          <footer class="service-price service-price-tiered">
-            <span class="service-price-label">Pricing</span>
-            <span class="service-price-value">Per pond count, all-in</span>
-            <dl class="service-price-tiers">
-              <div><dt>3 ponds</dt><dd>$500</dd></div>
-              <div><dt>5 ponds</dt><dd>$600</dd></div>
-              <div><dt>8 ponds</dt><dd>$750</dd></div>
-              <div><dt>12 ponds</dt><dd>$950</dd></div>
-              <div><dt>17 ponds</dt><dd>$1,200</dd></div>
-              <div><dt>25 ponds</dt><dd>$1,600</dd></div>
-              <div><dt>30 ponds</dt><dd>$1,850</dd></div>
-            </dl>
-            <span class="service-price-note">Above 30 ponds, quoted per scope. Recurring communities receive a standing rate after the first visit.</span>
-          </footer>
         </article>
 
         <article class="service">

@@ -335,7 +335,9 @@ button, input, select, textarea {
   opacity: .18;
 }
 
-.drone-arms path { fill: var(--ink); opacity: .9; }
+/* Arms drawn as 3D rods: lit top face + shadow strip below */
+.drone-arm-top { fill: var(--ink); }
+.drone-arm-shadow { fill: var(--ink-soft); opacity: .55; }
 
 .drone-prop line {
   stroke: var(--ink);
@@ -353,15 +355,21 @@ button, input, select, textarea {
   to { transform: rotate(360deg); }
 }
 
-.drone-motors circle,
-.drone-motors ellipse { fill: var(--ink); }
-.drone-motors-inner circle,
-.drone-motors-inner ellipse { fill: var(--sand); opacity: .5; }
+/* Motor pucks: side wall + lit top + sand-tone inner cap */
+.drone-motor-wall { fill: var(--ink-soft); }
+.drone-motor-top { fill: var(--ink); }
+.drone-motor-inner { fill: var(--sand); opacity: .55; }
 
+/* Body shaded as a 3D hex puck: dark side walls, ink-soft front face,
+   ink top with a paler inset highlight to read as form */
 .drone-body { fill: var(--ink); }
+.drone-body-side { fill: var(--ink-soft); opacity: .55; }
 .drone-body-front { fill: var(--ink-soft); opacity: .9; }
-.drone-body-inner { fill: var(--ink-soft); opacity: .55; }
-.drone-body-stripe { fill: var(--shallow); opacity: .8; }
+.drone-body-inner { fill: var(--ink-soft); opacity: .35; }
+.drone-body-stripe { fill: var(--shallow); opacity: .85; }
+
+.drone-antennas line { stroke: var(--ink); stroke-width: .9; stroke-linecap: round; }
+.drone-antennas circle { fill: var(--ink); }
 
 .drone-gimbal-arm { fill: var(--ink); }
 .drone-gimbal-mount { fill: var(--ink); }
@@ -1221,10 +1229,11 @@ section {
 }
 
 .about-credentials {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 36px 32px;
-  border-top: 4px solid var(--gulf);
+  background: transparent;
+  color: var(--ink);
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
 }
 
 .about-credentials h3 {
@@ -1233,32 +1242,36 @@ section {
   font-weight: 400;
   letter-spacing: .22em;
   text-transform: uppercase;
-  margin: 0 0 24px;
-  color: var(--shallow);
+  margin: 0 0 28px;
+  color: var(--gulf-deep);
 }
 
 .about-credentials dl { margin: 0; }
 .about-credentials dl > div {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(247, 246, 241, .12);
-  font-size: .92rem;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
 }
-.about-credentials dl > div:last-child { border-bottom: 0; }
+.about-credentials dl > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
 .about-credentials dt {
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: .18em;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(247, 246, 241, .6);
+  color: var(--muted);
   margin: 0;
 }
 .about-credentials dd {
   margin: 0;
-  text-align: right;
-  color: var(--paper);
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.35;
+  color: var(--ink);
 }
 
 @media (max-width: 900px) {
