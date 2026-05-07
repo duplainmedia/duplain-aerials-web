@@ -2959,3 +2959,110 @@ section {
 .closing-dark-inner {
   z-index: 2;
 }
+
+/* Closing form layout */
+
+.closing-form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
+  gap: 64px;
+  align-items: start;
+  margin-top: 48px;
+}
+
+.closing-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  position: sticky;
+  top: 120px;
+}
+
+.closing-call {
+  padding-top: 28px;
+  border-top: 1px solid rgba(247, 246, 241, .14);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.closing-call-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(247, 246, 241, .55);
+}
+.closing-call-link {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  line-height: 1;
+  color: var(--paper);
+  letter-spacing: -.01em;
+  transition: color .2s var(--e);
+}
+.closing-call-link:hover {
+  color: var(--shallow);
+}
+
+@media (max-width: 900px) {
+  .closing-form-grid { grid-template-columns: 1fr; gap: 56px; }
+  .closing-aside { position: static; }
+}
+
+/* Dark-variant contact form */
+
+.contact-form-dark .field-label {
+  color: rgba(247, 246, 241, .65);
+}
+.contact-form-dark input[type="text"],
+.contact-form-dark input[type="email"],
+.contact-form-dark input[type="tel"],
+.contact-form-dark select,
+.contact-form-dark textarea {
+  background: rgba(247, 246, 241, .04);
+  border-color: rgba(247, 246, 241, .22);
+  color: var(--paper);
+}
+.contact-form-dark input[type="text"]:hover,
+.contact-form-dark input[type="email"]:hover,
+.contact-form-dark input[type="tel"]:hover,
+.contact-form-dark select:hover,
+.contact-form-dark textarea:hover {
+  border-color: rgba(247, 246, 241, .4);
+}
+.contact-form-dark input[type="text"]:focus,
+.contact-form-dark input[type="email"]:focus,
+.contact-form-dark input[type="tel"]:focus,
+.contact-form-dark select:focus,
+.contact-form-dark textarea:focus {
+  border-color: var(--shallow);
+  outline: none;
+  background: rgba(247, 246, 241, .07);
+}
+.contact-form-dark input::placeholder,
+.contact-form-dark textarea::placeholder {
+  color: rgba(247, 246, 241, .35);
+}
+.contact-form-dark select {
+  color: rgba(247, 246, 241, .85);
+}
+.contact-form-dark select option {
+  background: var(--ink);
+  color: var(--paper);
+}
+.contact-form-dark .form-footer .btn-primary {
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--paper);
+}
+.contact-form-dark .form-footer .btn-primary:hover {
+  background: var(--shallow);
+  border-color: var(--shallow);
+  color: var(--ink);
+}
+.form-note-light {
+  color: rgba(247, 246, 241, .55) !important;
+}
+.form-note-light a {
+  color: var(--shallow);
+}

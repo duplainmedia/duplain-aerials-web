@@ -513,42 +513,139 @@
         </svg>
       </div>
      <div class="closing-dark-inner">
-      <div class="closing-grid">
-        <div class="closing-cta">
-          <span class="section-kicker">08 · Get in touch</span>
-          <h2 class="section-title">Let's talk.</h2>
-          <p class="section-lede">A short call to walk through your ponds and what would actually be useful for your community. The call is free, and there is no commitment on your end.</p>
-          <div class="product-cta-row">
-            <a class="btn btn-primary" href="/#contact">Send a message</a>
-            <a class="btn btn-ghost-light" href="tel:+19417024287">Or call (941) 702-4287</a>
+      <header class="section-head section-head-tight">
+        <span class="section-kicker">08 · Get in touch</span>
+        <h2 class="section-title">Let's talk.</h2>
+        <p class="section-lede">Tell us a little about your community and your ponds, and we will follow up within one business day to set up a short call. No commitment on your end, and no charge for the conversation.</p>
+      </header>
+
+      <div class="closing-form-grid">
+        <form class="contact-form contact-form-dark" name="aerial-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/hoa-pond-imaging/?submitted=1">
+          <input type="hidden" name="form-name" value="aerial-inquiry" />
+          <p class="honeypot"><label>Do not fill this out: <input name="bot-field" /></label></p>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field-label">Your name</span>
+              <input type="text" name="name" required autocomplete="name" />
+            </label>
+            <label class="field">
+              <span class="field-label">Role</span>
+              <input type="text" name="role" placeholder="Board member, property manager, etc." />
+            </label>
           </div>
-        </div>
-        <dl class="closing-credentials-list">
-          <div>
-            <dt>Certification</dt>
-            <dd>FAA Part 107 Remote Pilot</dd>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field-label">Email</span>
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+            <label class="field">
+              <span class="field-label">Phone</span>
+              <input type="tel" name="phone" autocomplete="tel" />
+            </label>
           </div>
-          <div>
-            <dt>Insurance</dt>
-            <dd>$1M commercial liability via Skywatch</dd>
+
+          <label class="field">
+            <span class="field-label">Community or project name</span>
+            <input type="text" name="community" />
+          </label>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field-label">Project type</span>
+              <select name="project_type" required data-project-type>
+                <option value="">Select one</option>
+                <option selected>Littoral zone imaging</option>
+                <option>Progress documentation</option>
+                <option>Mapping / orthomosaic</option>
+                <option>Aerial photography &amp; video</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+            <label class="field field-conditional" data-show-if="Littoral zone imaging">
+              <span class="field-label">Ponds / retention areas</span>
+              <input type="text" name="pond_count" placeholder="Approx. count if known" />
+            </label>
+            <label class="field field-conditional" data-show-if="Mapping / orthomosaic" hidden>
+              <span class="field-label">Approximate acreage</span>
+              <input type="text" name="acreage" placeholder="Acres, if known" />
+            </label>
+            <label class="field field-conditional" data-show-if="Progress documentation" hidden>
+              <span class="field-label">Visit cadence</span>
+              <select name="cadence">
+                <option value="">Select one</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+                <option>Quarterly</option>
+                <option>One-off</option>
+              </select>
+            </label>
+            <label class="field field-conditional" data-show-if="Aerial photography &amp; video" hidden>
+              <span class="field-label">Deliverable</span>
+              <select name="deliverable">
+                <option value="">Select one</option>
+                <option>Stills</option>
+                <option>Video</option>
+                <option>Both</option>
+              </select>
+            </label>
           </div>
-          <div>
-            <dt>Documentation</dt>
-            <dd>COI on file with your management company</dd>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field-label">City</span>
+              <input type="text" name="city" />
+            </label>
+            <label class="field">
+              <span class="field-label">Timeline</span>
+              <select name="timeline">
+                <option value="">Select one</option>
+                <option>Within 2 weeks</option>
+                <option>Within 30 days</option>
+                <option>Next quarter</option>
+                <option>Recurring / ongoing</option>
+                <option>Exploratory</option>
+              </select>
+            </label>
           </div>
-          <div>
-            <dt>Active</dt>
-            <dd>Deer Creek, Sarasota · 17 ponds</dd>
+
+          <label class="field">
+            <span class="field-label">Project notes</span>
+            <textarea name="notes" rows="4" placeholder="Anything relevant: number of ponds, current treatment vendor, compliance situation, timing, etc."></textarea>
+          </label>
+
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary">Send inquiry</button>
+            <span class="form-note form-note-light">Replies within one business day.</span>
           </div>
-          <div>
-            <dt>Adjacent</dt>
-            <dd>TREE Foundation × USF GIS</dd>
+        </form>
+
+        <aside class="closing-aside">
+          <dl class="closing-credentials-list">
+            <div>
+              <dt>Certification</dt>
+              <dd>FAA Part 107 Remote Pilot</dd>
+            </div>
+            <div>
+              <dt>Insurance</dt>
+              <dd>$1M commercial liability via Skywatch</dd>
+            </div>
+            <div>
+              <dt>Documentation</dt>
+              <dd>COI on file with your management company</dd>
+            </div>
+            <div>
+              <dt>Service area</dt>
+              <dd>Sarasota base · Ft. Myers to Tampa</dd>
+            </div>
+          </dl>
+
+          <div class="closing-call">
+            <span class="closing-call-label">Prefer to call?</span>
+            <a href="tel:+19417024287" class="closing-call-link">(941) 702-4287</a>
           </div>
-          <div>
-            <dt>Service area</dt>
-            <dd>Sarasota base · Ft. Myers to Tampa</dd>
-          </div>
-        </dl>
+        </aside>
       </div>
      </div>
     </section>
