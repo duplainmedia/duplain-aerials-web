@@ -25,6 +25,12 @@
       <a href="/#services">Services</a>
       <a href="/#work">Work</a>
       <a href="/#about">About</a>
+      <a href="tel:+19417024287" class="nav-phone" aria-label="Call (941) 702-4287">
+        <svg class="nav-phone-ico" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 4 C 4 4, 3 5, 3 6 C 3 14, 10 21, 18 21 C 19 21, 20 20, 20 19 L 20 16 L 15 15 L 14 17 C 11 16, 8 13, 7 10 L 9 9 L 8 4 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-phone-num">(941) 702-4287</span>
+      </a>
       <a href="/#contact" class="nav-cta">Request Survey</a>
     </nav>
   </header>
@@ -41,15 +47,40 @@
         </g>
       </svg>
     </div>
+
     <div class="notfound-inner">
       <p class="eyebrow"><span class="eyebrow-dot"></span>404 · Signal lost</p>
       <h1 class="display">Off the <em>map.</em></h1>
-      <p class="lede">Whatever you were looking for is not here, or has drifted somewhere else. The wind does that.</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="/">Return to site</a>
+      <p class="lede">Whatever you were looking for is not here. While the drone is up, take it for a spin.</p>
+
+      <div class="notfound-game" data-notfound-game>
+        <canvas class="notfound-game-canvas" data-game-canvas aria-label="Drone flight mini-game"></canvas>
+
+        <div class="notfound-game-hud" data-game-hud>
+          <div class="notfound-game-hud-row">
+            <span class="notfound-game-hud-cell"><span class="notfound-game-hud-key">ALT</span><span class="notfound-game-hud-val" data-hud-alt>0000</span><span class="notfound-game-hud-unit">AGL</span></span>
+            <span class="notfound-game-hud-cell"><span class="notfound-game-hud-key">SCORE</span><span class="notfound-game-hud-val" data-hud-score>0000</span></span>
+            <span class="notfound-game-hud-cell"><span class="notfound-game-hud-key">BEST</span><span class="notfound-game-hud-val" data-hud-best>0000</span></span>
+          </div>
+        </div>
+
+        <div class="notfound-game-overlay" data-game-overlay>
+          <div class="notfound-game-overlay-inner">
+            <p class="notfound-game-kicker" data-overlay-kicker>Pre-flight</p>
+            <h2 class="notfound-game-title" data-overlay-title>Take the drone up.</h2>
+            <p class="notfound-game-lede" data-overlay-lede>Hold to ascend. Release to descend. Stay clear of trees, lines, and birds. See how far the signal holds.</p>
+            <button class="btn btn-primary notfound-game-start" type="button" data-game-start>Start flight</button>
+            <p class="notfound-game-controls" data-overlay-controls>SPACE · TAP · CLICK</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-cta notfound-game-after">
+        <a class="btn btn-ghost" href="/">Return to site</a>
         <a class="btn btn-ghost" href="/#contact">Send an inquiry</a>
       </div>
     </div>
+
     <div class="notfound-coords" aria-hidden="true">
       <span>STATUS · OUT OF RANGE</span><span>RETURN HOME</span>
     </div>
@@ -65,5 +96,6 @@
     </div>
   </footer>
 
+  <script type="module" src="/assets/js/notfound-game.js"></script>
 </body>
 </html>
