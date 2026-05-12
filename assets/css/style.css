@@ -3389,10 +3389,14 @@ section {
 .notfound-game-canvas {
   display: block;
   width: 100%;
+  height: 380px;
   aspect-ratio: 21 / 10;
   background: linear-gradient(180deg, var(--paper) 0%, var(--paper-warm) 62%, var(--sand) 100%);
   touch-action: none;
   cursor: pointer;
+}
+@supports (aspect-ratio: 1 / 1) {
+  .notfound-game-canvas { height: auto; }
 }
 
 .notfound-game-hud {

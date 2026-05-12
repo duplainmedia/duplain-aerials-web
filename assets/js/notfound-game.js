@@ -20,8 +20,19 @@ const BRAND = {
 
 const BEST_KEY = 'duplainAerials.notfoundBest';
 
-const root = document.querySelector('[data-notfound-game]');
-if (root) initGame(root);
+function boot() {
+  try {
+    const root = document.querySelector('[data-notfound-game]');
+    if (root) initGame(root);
+  } catch (err) {
+    console.error('[notfound-game] init failed:', err);
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot, { once: true });
+} else {
+  boot();
+}
 
 function initGame(root) {
   const canvas = root.querySelector('[data-game-canvas]');
@@ -47,8 +58,10 @@ function initGame(root) {
 
   function resize() {
     const rect = canvas.getBoundingClientRect();
-    W = Math.max(320, Math.floor(rect.width));
-    H = Math.max(220, Math.floor(rect.height));
+    const cssW = rect.width || canvas.clientWidth || canvas.offsetWidth || 320;
+    const cssH = rect.height || canvas.clientHeight || canvas.offsetHeight || 220;
+    W = Math.max(320, Math.floor(cssW));
+    H = Math.max(220, Math.floor(cssH));
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = W * dpr;
     canvas.height = H * dpr;
@@ -56,8 +69,15 @@ function initGame(root) {
     groundY = H - Math.max(36, H * 0.14);
   }
   resize();
-  const ro = new ResizeObserver(resize);
-  ro.observe(canvas);
+  if (typeof ResizeObserver !== 'undefined') {
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+  } else {
+    window.addEventListener('resize', resize);
+  }
+  // iOS Safari sometimes finalises layout after first paint; re-measure shortly
+  setTimeout(resize, 200);
+  setTimeout(resize, 800);
 
   // ---------- game state ----------
   const state = {
@@ -265,14 +285,20 @@ function initGame(root) {
   let rafId = 0;
   let running = true;
 
+  let loopErrors = 0;
   function loop(now) {
     rafId = requestAnimationFrame(loop);
     const dt = Math.min(0.045, (now - last) / 1000);
     last = now;
     if (!running) return;
-
-    if (state.mode === 'playing') update(dt);
-    draw(dt);
+    try {
+      if (state.mode === 'playing') update(dt);
+      draw(dt);
+    } catch (err) {
+      loopErrors++;
+      if (loopErrors < 3) console.error('[notfound-game] loop error:', err);
+      if (loopErrors > 10) { cancelAnimationFrame(rafId); console.error('[notfound-game] too many errors — stopping loop'); }
+    }
   }
   rafId = requestAnimationFrame(loop);
 
