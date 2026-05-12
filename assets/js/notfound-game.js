@@ -74,6 +74,7 @@ function initGame(root) {
     best: Number(localStorage.getItem(BEST_KEY) || 0) | 0,
     obstacles: [],
     birds: [],
+    helicopters: [],
     clouds: [],
     sawgrass: [],
     contours: [],
@@ -111,6 +112,7 @@ function initGame(root) {
     state.score = 0;
     state.obstacles.length = 0;
     state.birds.length = 0;
+    state.helicopters.length = 0;
     state.gust = 0;
     state.gustTimer = 5;
     initBackground();
@@ -204,7 +206,7 @@ function initGame(root) {
       ? `New personal best of ${state.score} feet. Send it again.`
       : `You held the signal for ${state.score} feet. Best so far: ${state.best}.`;
     overlayControls.textContent = 'SPACE · TAP · CLICK TO RETRY';
-    startBtn.textContent = 'Fly again';
+    startBtn.textContent = 'Press space to fly again';
     overlay.hidden = false;
   }
 
@@ -284,6 +286,15 @@ function initGame(root) {
     }
     state.birds = state.birds.filter(b => b.x + b.w > -40);
 
+    for (const h of state.helicopters) {
+      h.x -= (state.speed + h.relSpeed) * dt;
+      h.rotor += dt * 38;
+      h.tailRotor += dt * 80;
+      h.bob += dt * 1.6;
+      h.y = h.yBase + Math.sin(h.bob) * 10;
+    }
+    state.helicopters = state.helicopters.filter(h => h.x + h.w > -60);
+
     // Background motion
     for (const c of state.clouds) {
       c.x -= c.s * dt;
@@ -307,19 +318,23 @@ function initGame(root) {
   }
 
   function spawnObstacle() {
+    const t = state.t;
+    // Helicopters fade in after a warm-up, then ramp toward common
+    const heliChance = t < 16 ? 0 : Math.min(0.32, (t - 16) * 0.011);
+    const birdChance = Math.min(0.34, 0.10 + t * 0.0045);
+    const poleChance = 0.22;
     const r = Math.random();
-    // Bird probability rises with time
-    const birdChance = Math.min(0.42, 0.12 + state.t * 0.005);
-    const poleChance = 0.28;
-    if (r < birdChance) {
+    if (r < heliChance) {
+      spawnHelicopter();
+    } else if (r < heliChance + birdChance) {
       spawnBird();
-    } else if (r < birdChance + poleChance) {
+    } else if (r < heliChance + birdChance + poleChance) {
       spawnPole();
     } else {
       spawnTree();
     }
     // Occasional double trees for variety
-    if (state.t > 10 && Math.random() < 0.18) {
+    if (t > 10 && Math.random() < 0.18) {
       setTimeout(() => { if (state.mode === 'playing') spawnTree(180); }, 0);
     }
   }
@@ -374,6 +389,24 @@ function initGame(root) {
     });
   }
 
+  function spawnHelicopter() {
+    const w = 92;
+    const h = 30;
+    const yMin = 38;
+    const yMax = groundY - 110;
+    const yBase = yMin + Math.random() * (yMax - yMin);
+    state.helicopters.push({
+      x: W + 50,
+      y: yBase,
+      yBase,
+      w, h,
+      relSpeed: 50 + Math.random() * 80,
+      rotor: Math.random() * Math.PI * 2,
+      tailRotor: Math.random() * Math.PI * 2,
+      bob: Math.random() * Math.PI * 2,
+    });
+  }
+
   // ---------- collisions ----------
   function droneRect() {
     // Tight hitbox inside drawn silhouette
@@ -405,6 +438,13 @@ function initGame(root) {
       const r = { x: b.x + 4, y: b.y + 3, w: b.w - 8, h: b.h - 6 };
       if (rectsHit(dr, r)) return true;
     }
+    for (const h of state.helicopters) {
+      // Body + cockpit
+      const body = { x: h.x + 14, y: h.y + 8, w: 42, h: h.h - 12 };
+      // Tail boom
+      const tail = { x: h.x + 50, y: h.y + 14, w: 32, h: 4 };
+      if (rectsHit(dr, body) || rectsHit(dr, tail)) return true;
+    }
     return false;
   }
 
@@ -424,6 +464,7 @@ function initGame(root) {
     drawGround();
     drawObstacles();
     drawBirds();
+    drawHelicopters();
     drawDrone();
     drawHUDMarkers();
   }
@@ -723,6 +764,125 @@ function initGame(root) {
       ctx.arc(b.x + b.w * 0.5, b.y + b.h * 0.5 + 1, 1.5, 0, Math.PI * 2);
       ctx.fill();
     }
+    ctx.restore();
+  }
+
+  function drawHelicopters() {
+    for (const h of state.helicopters) drawHelicopter(h);
+  }
+
+  function drawHelicopter(h) {
+    // Helicopter faces left (nose toward the drone)
+    ctx.save();
+    const x = h.x;
+    const y = h.y;
+
+    // Main rotor blur disc (drawn first so body sits in front)
+    ctx.fillStyle = BRAND.gulfDeep;
+    ctx.globalAlpha = 0.22;
+    ctx.beginPath();
+    ctx.ellipse(x + 28, y + 4, 50, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Rotor mast
+    ctx.fillStyle = BRAND.ink;
+    ctx.fillRect(x + 27, y + 4, 2, 6);
+
+    // Body (nose-left teardrop: rounded front, tapered back)
+    ctx.fillStyle = BRAND.ink;
+    ctx.beginPath();
+    ctx.moveTo(x + 12, y + 18);                       // nose tip
+    ctx.quadraticCurveTo(x + 8, y + 12, x + 18, y + 10);
+    ctx.lineTo(x + 48, y + 10);
+    ctx.quadraticCurveTo(x + 56, y + 10, x + 56, y + 16);
+    ctx.lineTo(x + 56, y + 22);
+    ctx.quadraticCurveTo(x + 50, y + 26, x + 38, y + 26);
+    ctx.lineTo(x + 18, y + 26);
+    ctx.quadraticCurveTo(x + 10, y + 24, x + 12, y + 18);
+    ctx.closePath();
+    ctx.fill();
+
+    // Cockpit window (gulf tint)
+    ctx.fillStyle = BRAND.gulf;
+    ctx.globalAlpha = 0.85;
+    ctx.beginPath();
+    ctx.moveTo(x + 14, y + 16);
+    ctx.quadraticCurveTo(x + 12, y + 13, x + 20, y + 12);
+    ctx.lineTo(x + 26, y + 12);
+    ctx.lineTo(x + 26, y + 18);
+    ctx.lineTo(x + 16, y + 18);
+    ctx.closePath();
+    ctx.fill();
+    // Window highlight
+    ctx.fillStyle = BRAND.paper;
+    ctx.globalAlpha = 0.55;
+    ctx.fillRect(x + 17, y + 13, 6, 1.2);
+    ctx.globalAlpha = 1;
+
+    // Body stripe (shallow accent)
+    ctx.fillStyle = BRAND.shallow;
+    ctx.fillRect(x + 30, y + 18, 22, 1.6);
+
+    // Tail boom
+    ctx.fillStyle = BRAND.ink;
+    ctx.fillRect(x + 54, y + 14, 28, 3.5);
+
+    // Tail fin
+    ctx.beginPath();
+    ctx.moveTo(x + 78, y + 14);
+    ctx.lineTo(x + 84, y + 10);
+    ctx.lineTo(x + 84, y + 18);
+    ctx.closePath();
+    ctx.fill();
+
+    // Tail rotor (spinning crosshair)
+    ctx.save();
+    ctx.translate(x + 84, y + 14);
+    ctx.rotate(h.tailRotor);
+    ctx.strokeStyle = BRAND.ink;
+    ctx.lineWidth = 1.1;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-5, 0); ctx.lineTo(5, 0);
+    ctx.moveTo(0, -5); ctx.lineTo(0, 5);
+    ctx.stroke();
+    // Faint blur ring
+    ctx.fillStyle = BRAND.gulfDeep;
+    ctx.globalAlpha = 0.22;
+    ctx.beginPath();
+    ctx.arc(0, 0, 5.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Main rotor crossed blades (rotates above)
+    ctx.save();
+    ctx.translate(x + 28, y + 3);
+    ctx.rotate(h.rotor);
+    ctx.strokeStyle = BRAND.ink;
+    ctx.lineWidth = 1.4;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-44, 0); ctx.lineTo(44, 0);
+    ctx.moveTo(0, -3); ctx.lineTo(0, 3);
+    ctx.stroke();
+    ctx.restore();
+
+    // Skids
+    ctx.strokeStyle = BRAND.ink;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x + 18, y + 28); ctx.lineTo(x + 18, y + 32);
+    ctx.moveTo(x + 46, y + 28); ctx.lineTo(x + 46, y + 32);
+    ctx.moveTo(x + 14, y + 32); ctx.lineTo(x + 50, y + 32);
+    ctx.stroke();
+
+    // Navigation light
+    ctx.fillStyle = BRAND.gulfDeep;
+    ctx.beginPath();
+    ctx.arc(x + 12, y + 19, 0.9, 0, Math.PI * 2);
+    ctx.fill();
+
     ctx.restore();
   }
 
