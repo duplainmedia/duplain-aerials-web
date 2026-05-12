@@ -63,23 +63,37 @@ function initGame(root) {
   const state = {
     mode: 'idle', // idle | playing | over
     t: 0,
-    speed: 180,         // px/s base
+    speed: 180,         // current px/s, smoothed toward speedTarget
+    speedTarget: 180,   // natural ramp target
     speedMax: 460,
     accel: 6.0,         // speed gain per second
+    returnRate: 110,    // px/s² when catching back up after respawn
     spawnTimer: 0,
     spawnInterval: 1.35,
     minSpawn: 0.55,
+    pondTimer: 6,
+    updraftTimer: 22,
     distance: 0,
     score: 0,
     best: Number(localStorage.getItem(BEST_KEY) || 0) | 0,
     obstacles: [],
     birds: [],
     helicopters: [],
+    ponds: [],
+    extras: [],
+    updrafts: [],
     clouds: [],
     sawgrass: [],
     contours: [],
-    gust: 0,           // active gust impulse, decays
+    gust: 0,
     gustTimer: 5,
+    snapStreak: 0,
+    snapFlash: 0,
+    lives: 0,
+    livesMax: 3,
+    invulnTimer: 0,
+    boostTimer: 0,
+    shake: 0,
   };
 
   bestEl.textContent = pad(state.best, 4);
@@ -106,16 +120,44 @@ function initGame(root) {
     drone.tilt = 0;
     state.t = 0;
     state.speed = 180;
+    state.speedTarget = 180;
     state.spawnTimer = 0.6;
     state.spawnInterval = 1.35;
+    state.pondTimer = 6;
+    state.updraftTimer = 22;
     state.distance = 0;
     state.score = 0;
     state.obstacles.length = 0;
     state.birds.length = 0;
     state.helicopters.length = 0;
+    state.ponds.length = 0;
+    state.extras.length = 0;
+    state.updrafts.length = 0;
     state.gust = 0;
     state.gustTimer = 5;
+    state.snapStreak = 0;
+    state.snapFlash = 0;
+    state.lives = 0;
+    state.invulnTimer = 0;
+    state.boostTimer = 0;
+    state.shake = 0;
     initBackground();
+  }
+
+  function respawnAfterCrash() {
+    drone.x = Math.max(80, W * 0.22);
+    drone.y = H * 0.40;
+    drone.vy = 0;
+    drone.tilt = 0;
+    // Clear nearby threats so respawn isn't instant death
+    state.obstacles = state.obstacles.filter(o => o.x > W * 0.6);
+    state.birds = state.birds.filter(b => b.x > W * 0.6);
+    state.helicopters = state.helicopters.filter(h => h.x > W * 0.6);
+    // Speed dip with quick ramp back
+    state.speed = Math.max(160, state.speedTarget * 0.55);
+    state.invulnTimer = 1.6;
+    state.boostTimer = 0;
+    state.shake = 8;
   }
 
   function initBackground() {
@@ -156,16 +198,24 @@ function initGame(root) {
   canvas.addEventListener('touchcancel',() => setHold(false));
 
   window.addEventListener('keydown', (e) => {
-    if (e.repeat) return;
     if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
       e.preventDefault();
+      if (e.repeat) return;
       onPress();
+    } else if (e.code === 'Enter') {
+      e.preventDefault();
+      if (e.repeat) return;
+      if (state.mode === 'playing') tryPhotoSnap();
+      else if (state.mode === 'idle' || state.mode === 'over') startGame();
     } else if (e.code === 'Escape' && state.mode === 'playing') {
       gameOver(true);
     }
   });
   window.addEventListener('keyup', (e) => {
-    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') setHold(false);
+    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+      e.preventDefault();
+      setHold(false);
+    }
   });
 
   startBtn.addEventListener('click', startGame);
@@ -234,33 +284,60 @@ function initGame(root) {
   // ---------- update ----------
   function update(dt) {
     state.t += dt;
-    state.speed = Math.min(state.speedMax, state.speed + state.accel * dt);
+
+    // Natural ramp on target, current speed catches up
+    state.speedTarget = Math.min(state.speedMax, state.speedTarget + state.accel * dt);
+    if (state.speed < state.speedTarget) {
+      state.speed = Math.min(state.speedTarget, state.speed + state.returnRate * dt);
+    } else {
+      state.speed = state.speedTarget;
+    }
     state.spawnInterval = Math.max(state.minSpawn, 1.35 - state.t * 0.018);
 
-    // Drone physics
-    const wind = state.gust;
-    drone.vy += drone.gravity * dt + wind * dt;
-    if (holding) drone.vy += drone.thrust * dt;
-    drone.vy = clamp(drone.vy, drone.maxRise, drone.maxFall);
-    drone.y += drone.vy * dt;
-    drone.tilt = clamp(drone.vy / 700, -0.35, 0.35);
-    drone.rotor += dt * 40;
+    // Boost / invuln timers
+    const boostWasActive = state.boostTimer > 0;
+    if (state.boostTimer > 0) state.boostTimer = Math.max(0, state.boostTimer - dt);
+    if (state.invulnTimer > 0) state.invulnTimer = Math.max(0, state.invulnTimer - dt);
+    if (state.snapFlash > 0) state.snapFlash = Math.max(0, state.snapFlash - dt);
+    state.shake *= Math.max(0, 1 - dt * 6);
 
-    // Floor / ceiling crash
+    // When boost just ended, extend invulnerability for 2 seconds
+    if (boostWasActive && state.boostTimer === 0) {
+      state.invulnTimer = Math.max(state.invulnTimer, 2.0);
+    }
+
+    const boostMult = state.boostTimer > 0 ? 3 : 1;
+    const moveSpeed = state.speed * boostMult;
+
+    // Drone physics — during boost, lock altitude (no gravity, thrust, or wind)
+    if (state.boostTimer > 0) {
+      drone.vy = 0;
+      drone.tilt = 0;
+    } else {
+      const wind = state.gust;
+      drone.vy += drone.gravity * dt + wind * dt;
+      if (holding) drone.vy += drone.thrust * dt;
+      drone.vy = clamp(drone.vy, drone.maxRise, drone.maxFall);
+      drone.tilt = clamp(drone.vy / 700, -0.35, 0.35);
+    }
+    drone.y += drone.vy * dt;
+    drone.rotor += dt * (40 + boostMult * 20);
+
+    // Floor / ceiling
     if (drone.y + drone.h * 0.5 >= groundY - 4) {
       drone.y = groundY - 4 - drone.h * 0.5;
-      gameOver(false);
-      return;
+      handleCrash();
+      if (state.mode !== 'playing') return;
     }
     if (drone.y < 10) { drone.y = 10; drone.vy = Math.max(drone.vy, 60); }
 
-    // Distance / score
-    state.distance += state.speed * dt;
+    // Distance / score (boost contributes triple)
+    state.distance += moveSpeed * dt;
     state.score = Math.floor(state.distance / 5);
 
-    // Gusts (after a warmup)
+    // Gusts (after a warmup; pause during boost)
     state.gust *= Math.max(0, 1 - dt * 2.2);
-    if (state.t > 14) {
+    if (state.t > 14 && state.boostTimer === 0) {
       state.gustTimer -= dt;
       if (state.gustTimer <= 0) {
         state.gustTimer = 4 + Math.random() * 5;
@@ -268,26 +345,40 @@ function initGame(root) {
       }
     }
 
-    // Spawning
+    // Obstacle spawning
     state.spawnTimer -= dt;
     if (state.spawnTimer <= 0) {
       spawnObstacle();
       state.spawnTimer = state.spawnInterval * (0.85 + Math.random() * 0.35);
     }
 
+    // Pond spawning
+    state.pondTimer -= dt;
+    if (state.pondTimer <= 0) {
+      spawnPond();
+      state.pondTimer = 9 + Math.random() * 7;
+    }
+
+    // Updraft spawning (rare; only after the first 12s and never during boost)
+    state.updraftTimer -= dt;
+    if (state.updraftTimer <= 0) {
+      if (state.t > 12 && state.boostTimer === 0) spawnUpdraft();
+      state.updraftTimer = 18 + Math.random() * 16;
+    }
+
     // Move + cull obstacles
-    for (const o of state.obstacles) o.x -= state.speed * dt;
+    for (const o of state.obstacles) o.x -= moveSpeed * dt;
     state.obstacles = state.obstacles.filter(o => o.x + o.w > -40);
 
     for (const b of state.birds) {
-      b.x -= (state.speed + b.relSpeed) * dt;
+      b.x -= (moveSpeed + b.relSpeed) * dt;
       b.flap += dt * 8;
       b.y += Math.sin(state.t * 1.4 + b.phase) * 14 * dt;
     }
     state.birds = state.birds.filter(b => b.x + b.w > -40);
 
     for (const h of state.helicopters) {
-      h.x -= (state.speed + h.relSpeed) * dt;
+      h.x -= (moveSpeed + h.relSpeed) * dt;
       h.rotor += dt * 38;
       h.tailRotor += dt * 80;
       h.bob += dt * 1.6;
@@ -295,26 +386,55 @@ function initGame(root) {
     }
     state.helicopters = state.helicopters.filter(h => h.x + h.w > -60);
 
-    // Background motion
-    for (const c of state.clouds) {
-      c.x -= c.s * dt;
-      if (c.x + c.r < -10) { c.x = W + c.r + Math.random() * 80; c.y = 20 + Math.random() * (H * 0.30); }
+    // Ponds: move + missed-streak tracking
+    for (const p of state.ponds) p.x -= moveSpeed * dt;
+    const passed = state.ponds.filter(p => p.x + p.w <= drone.x - drone.w * 0.5);
+    for (const p of passed) {
+      if (!p.snapped) state.snapStreak = 0;
+      p.done = true;
     }
-    for (const k of state.contours) {
-      k.x -= state.speed * 0.18 * dt;
-      if (k.x + k.w < -20) k.x = W + Math.random() * 60;
-    }
-    for (const g of state.sawgrass) {
-      g.x -= state.speed * 1.1 * dt;
-      if (g.x < -4) g.x = W + Math.random() * 30;
-    }
+    state.ponds = state.ponds.filter(p => p.x + p.w > -40 && !p.done);
 
-    // Collisions
-    if (collides()) gameOver(false);
+    // Extras (life balloons)
+    for (const e of state.extras) {
+      e.x -= (moveSpeed + e.relSpeed) * dt;
+      e.bob += dt * 1.4;
+      e.y = e.yBase + Math.sin(e.bob) * 12;
+      e.rot += dt * 0.6;
+    }
+    state.extras = state.extras.filter(e => e.x + e.r > -40);
+
+    // Updrafts
+    for (const u of state.updrafts) {
+      u.x -= moveSpeed * dt;
+      u.phase += dt;
+    }
+    state.updrafts = state.updrafts.filter(u => u.x + u.w > -20);
+
+    // Pickups (extras, updrafts) — always available even during invuln
+    pickups();
+
+    // Collisions (skip during boost or invuln)
+    if (state.boostTimer === 0 && state.invulnTimer === 0 && collides()) {
+      handleCrash();
+    }
 
     // HUD
     altEl.textContent = pad(Math.max(0, Math.round(groundY - drone.y)), 4);
     scoreEl.textContent = pad(state.score, 4);
+  }
+
+  function handleCrash() {
+    if (state.mode !== 'playing') return;
+    if (state.lives > 0) {
+      state.lives--;
+      flash.classList.remove('on');
+      void flash.offsetWidth;
+      flash.classList.add('on');
+      respawnAfterCrash();
+      return;
+    }
+    gameOver(false);
   }
 
   function spawnObstacle() {
@@ -389,6 +509,101 @@ function initGame(root) {
     });
   }
 
+  function spawnPond() {
+    const w = 130 + Math.random() * 50;
+    const h = 22;
+    state.ponds.push({
+      x: W + 80,
+      y: groundY - h * 0.4,
+      w, h,
+      snapped: false,
+      done: false,
+      ripple: Math.random() * Math.PI * 2,
+    });
+  }
+
+  function spawnExtraLife() {
+    const r = 26;
+    const yMin = 70;
+    const yMax = groundY - 120;
+    const yBase = yMin + Math.random() * (yMax - yMin);
+    state.extras.push({
+      x: W + 60,
+      y: yBase,
+      yBase,
+      r,
+      bob: Math.random() * Math.PI * 2,
+      rot: 0,
+      relSpeed: -30,  // drifts a touch slower than world
+    });
+  }
+
+  function spawnUpdraft() {
+    const w = 46;
+    const bubbleR = 14;
+    const yMin = 70;
+    const yMax = groundY - 90;
+    state.updrafts.push({
+      x: W + 40,
+      y: 0,
+      w,
+      h: groundY - 10,
+      phase: Math.random() * Math.PI * 2,
+      consumed: false,
+      bubbleY: yMin + Math.random() * (yMax - yMin),
+      bubbleR,
+      pulse: Math.random() * Math.PI * 2,
+    });
+  }
+
+  function tryPhotoSnap() {
+    // Snap any pond currently aligned beneath the drone
+    let snapped = false;
+    for (const p of state.ponds) {
+      if (p.snapped) continue;
+      const droneCenterX = drone.x;
+      if (droneCenterX > p.x + 6 && droneCenterX < p.x + p.w - 6) {
+        p.snapped = true;
+        snapped = true;
+        state.snapStreak++;
+        state.snapFlash = 0.35;
+        if (state.snapStreak >= 3) {
+          spawnExtraLife();
+          state.snapStreak = 0;
+        }
+        break;
+      }
+    }
+    return snapped;
+  }
+
+  function pickups() {
+    const dr = droneRect();
+    // Extra-life balloons
+    for (const e of state.extras) {
+      const r = { x: e.x - e.r, y: e.y - e.r, w: e.r * 2, h: e.r * 2 };
+      if (rectsHit(dr, r)) {
+        if (state.lives < state.livesMax) state.lives++;
+        e.x = -9999;  // mark for cleanup
+      }
+    }
+    // Updrafts — only the small bubble at u.bubbleY counts as the pickup
+    for (const u of state.updrafts) {
+      if (u.consumed) continue;
+      const bx = u.x + u.w * 0.5;
+      const by = u.bubbleY;
+      const dx = drone.x - bx;
+      const dy = drone.y - by;
+      const reach = u.bubbleR + 14;
+      if (dx * dx + dy * dy <= reach * reach) {
+        u.consumed = true;
+        state.boostTimer = 5;
+        state.shake = 6;
+        u.x = -9999;
+      }
+    }
+  }
+
   function spawnHelicopter() {
     const w = 92;
     const h = 30;
@@ -450,6 +665,12 @@ function initGame(root) {
 
   // ---------- drawing ----------
   function draw() {
+    // Optional camera shake (during crash flash / boost entry)
+    const shakeX = state.shake > 0.1 ? (Math.random() - 0.5) * state.shake : 0;
+    const shakeY = state.shake > 0.1 ? (Math.random() - 0.5) * state.shake : 0;
+    ctx.save();
+    if (shakeX || shakeY) ctx.translate(shakeX, shakeY);
+
     // Sky gradient
     const sky = ctx.createLinearGradient(0, 0, 0, H);
     sky.addColorStop(0, BRAND.paper);
@@ -462,11 +683,26 @@ function initGame(root) {
     drawClouds();
     drawDistantContours();
     drawGround();
+    drawPonds();
     drawObstacles();
     drawBirds();
     drawHelicopters();
+    drawUpdrafts();
+    drawExtras();
+    if (state.boostTimer > 0) drawBoostTrail();
     drawDrone();
     drawHUDMarkers();
+    drawCanvasOverlays();
+
+    // Snap flash (shallow blue full-canvas)
+    if (state.snapFlash > 0) {
+      ctx.fillStyle = BRAND.shallow;
+      ctx.globalAlpha = state.snapFlash * 0.45;
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalAlpha = 1;
+    }
+
+    ctx.restore();
   }
 
   function drawTopoBackground() {
@@ -767,6 +1003,249 @@ function initGame(root) {
     ctx.restore();
   }
 
+  function drawPonds() {
+    for (const p of state.ponds) {
+      ctx.save();
+      const cx = p.x + p.w * 0.5;
+      const cy = p.y + p.h * 0.5;
+
+      // Concentric rings (littoral zones)
+      ctx.strokeStyle = BRAND.sandDeep;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, p.w * 0.5, p.h * 0.55, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Water body
+      ctx.fillStyle = BRAND.shallow;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, p.w * 0.46, p.h * 0.45, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Deep center
+      ctx.fillStyle = BRAND.gulf;
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, p.w * 0.30, p.h * 0.30, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Ripple animation (a faint expanding ring)
+      const rt = (state.t + p.ripple) % 2;
+      ctx.strokeStyle = BRAND.paper;
+      ctx.globalAlpha = Math.max(0, 1 - rt / 2) * 0.4;
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, p.w * 0.18 + rt * p.w * 0.18, (p.h * 0.18 + rt * p.h * 0.18) * 0.9, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // Snapped state: photo-frame brackets and check
+      if (p.snapped) {
+        ctx.strokeStyle = BRAND.ink;
+        ctx.lineWidth = 1.2;
+        const bx = p.x;
+        const by = p.y - 14;
+        const bw = p.w;
+        const bh = p.h + 28;
+        const t = 6;
+        ctx.beginPath();
+        ctx.moveTo(bx, by + t); ctx.lineTo(bx, by); ctx.lineTo(bx + t, by);
+        ctx.moveTo(bx + bw - t, by); ctx.lineTo(bx + bw, by); ctx.lineTo(bx + bw, by + t);
+        ctx.moveTo(bx + bw, by + bh - t); ctx.lineTo(bx + bw, by + bh); ctx.lineTo(bx + bw - t, by + bh);
+        ctx.moveTo(bx + t, by + bh); ctx.lineTo(bx, by + bh); ctx.lineTo(bx, by + bh - t);
+        ctx.stroke();
+        ctx.font = '600 9px "JetBrains Mono", monospace';
+        ctx.fillStyle = BRAND.gulfDeep;
+        ctx.textAlign = 'center';
+        ctx.fillText('CAPTURED', cx, by - 4);
+      } else {
+        // "POND" pin label above
+        ctx.font = '500 8px "JetBrains Mono", monospace';
+        ctx.fillStyle = BRAND.muted;
+        ctx.textAlign = 'center';
+        ctx.fillText('POND', cx, p.y - 6);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawUpdrafts() {
+    for (const u of state.updrafts) {
+      ctx.save();
+      // 5 rising wisps (background atmospheric effect, slightly subtler now)
+      ctx.strokeStyle = BRAND.shallow;
+      ctx.lineWidth = 1;
+      ctx.lineCap = 'round';
+      for (let i = 0; i < 5; i++) {
+        const baseX = u.x + 6 + i * (u.w - 12) / 4;
+        const off = ((state.t * 80 + i * 35) % 60) - 60;
+        ctx.globalAlpha = 0.32 + Math.sin(state.t * 4 + i) * 0.10;
+        ctx.beginPath();
+        for (let yy = groundY - 6; yy > 6; yy -= 12) {
+          const x = baseX + Math.sin((yy + off) * 0.06 + i) * 6;
+          if (yy === groundY - 6) ctx.moveTo(x, yy + off);
+          else ctx.lineTo(x, yy + off);
+        }
+        ctx.stroke();
+      }
+      // Small rising particles, denser near the bubble
+      ctx.fillStyle = BRAND.gulf;
+      ctx.globalAlpha = 0.45;
+      for (let i = 0; i < 10; i++) {
+        const px = u.x + ((u.w * (i / 10) + state.t * 8 * i) % u.w);
+        const py = groundY - ((state.t * 60 + i * 40) % (groundY - 20));
+        ctx.beginPath();
+        ctx.arc(px, py, 1.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // Bubble — the actual pickup target
+      const bx = u.x + u.w * 0.5;
+      const by = u.bubbleY;
+      const pulse = Math.sin(state.t * 4 + u.pulse) * 0.18 + 1;
+      const r = u.bubbleR * pulse;
+
+      // Soft halo
+      ctx.fillStyle = BRAND.shallow;
+      ctx.globalAlpha = 0.22;
+      ctx.beginPath();
+      ctx.arc(bx, by, r * 1.9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Outer ring (gulf)
+      ctx.strokeStyle = BRAND.gulfDeep;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(bx, by, r, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Inner fill (shallow)
+      ctx.fillStyle = BRAND.shallow;
+      ctx.beginPath();
+      ctx.arc(bx, by, r - 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Inner highlight
+      ctx.fillStyle = BRAND.paper;
+      ctx.globalAlpha = 0.55;
+      ctx.beginPath();
+      ctx.arc(bx - r * 0.32, by - r * 0.32, r * 0.32, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Tiny up-arrow inside
+      ctx.strokeStyle = BRAND.gulfDeep;
+      ctx.lineWidth = 1.4;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ctx.moveTo(bx, by + r * 0.42);
+      ctx.lineTo(bx, by - r * 0.42);
+      ctx.moveTo(bx - r * 0.32, by - r * 0.10);
+      ctx.lineTo(bx, by - r * 0.42);
+      ctx.lineTo(bx + r * 0.32, by - r * 0.10);
+      ctx.stroke();
+
+      // Mono label at top of column
+      ctx.font = '500 8px "JetBrains Mono", monospace';
+      ctx.fillStyle = BRAND.gulfDeep;
+      ctx.textAlign = 'center';
+      ctx.fillText('UPDRAFT', u.x + u.w * 0.5, 14);
+      ctx.restore();
+    }
+  }
+
+  function drawExtras() {
+    for (const e of state.extras) {
+      ctx.save();
+      const cx = e.x;
+      const cy = e.y;
+      // Bubble (dashed shallow ring)
+      ctx.strokeStyle = BRAND.shallow;
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.arc(cx, cy, e.r, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Inner faint fill
+      ctx.fillStyle = BRAND.paper;
+      ctx.globalAlpha = 0.7;
+      ctx.beginPath();
+      ctx.arc(cx, cy, e.r - 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      // Highlight crescent
+      ctx.strokeStyle = BRAND.shallow;
+      ctx.globalAlpha = 0.55;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx - e.r * 0.25, cy - e.r * 0.25, e.r * 0.55, Math.PI * 1.0, Math.PI * 1.5);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      // Mini drone inside (re-uses player draw at small scale)
+      ctx.translate(cx, cy);
+      ctx.rotate(Math.sin(e.rot) * 0.18);
+      const s = 0.55;
+      ctx.scale(s, s);
+      drawMiniDrone();
+      ctx.restore();
+      // Label
+      ctx.save();
+      ctx.font = '500 8px "JetBrains Mono", monospace';
+      ctx.fillStyle = BRAND.gulfDeep;
+      ctx.textAlign = 'center';
+      ctx.fillText('+1 LIFE', cx, cy + e.r + 12);
+      ctx.restore();
+    }
+  }
+
+  function drawMiniDrone() {
+    // Stripped-down drone for the bubble
+    ctx.strokeStyle = BRAND.ink;
+    ctx.lineWidth = 1.6;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-22, 0); ctx.lineTo(-2, -2);
+    ctx.moveTo(22, 0);  ctx.lineTo(2, -2);
+    ctx.stroke();
+    ctx.fillStyle = BRAND.ink;
+    ctx.beginPath();
+    ctx.moveTo(-12, -2); ctx.lineTo(-9, -6); ctx.lineTo(9, -6); ctx.lineTo(12, -2); ctx.lineTo(9, 4); ctx.lineTo(-9, 4); ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = BRAND.shallow;
+    ctx.fillRect(-7, -0.5, 14, 1.2);
+    ctx.fillStyle = BRAND.gulf;
+    ctx.beginPath(); ctx.arc(0, 7, 2.2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = BRAND.ink;
+    ctx.beginPath(); ctx.arc(-22, 0, 3, 0, Math.PI * 2); ctx.arc(22, 0, 3, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function drawBoostTrail() {
+    // Streaks behind the drone
+    ctx.save();
+    ctx.strokeStyle = BRAND.shallow;
+    ctx.lineCap = 'round';
+    for (let i = 0; i < 12; i++) {
+      const len = 30 + Math.random() * 90;
+      const yOff = (Math.random() - 0.5) * 30;
+      const startX = drone.x - 10 - Math.random() * 40;
+      const alpha = 0.15 + Math.random() * 0.5;
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = 0.6 + Math.random() * 1.4;
+      ctx.beginPath();
+      ctx.moveTo(startX, drone.y + yOff);
+      ctx.lineTo(startX - len, drone.y + yOff);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
   function drawHelicopters() {
     for (const h of state.helicopters) drawHelicopter(h);
   }
@@ -1032,6 +1511,85 @@ function initGame(root) {
       ctx.textAlign = 'center';
       const arrow = state.gust > 0 ? '↓' : '↑';
       ctx.fillText(`GUST ${arrow}`, W / 2, 22);
+      ctx.restore();
+    }
+  }
+
+  function drawCanvasOverlays() {
+    if (state.mode !== 'playing') return;
+
+    // Lives indicator (top-left): tiny drone glyphs
+    if (state.lives > 0) {
+      ctx.save();
+      ctx.font = '500 9px "JetBrains Mono", monospace';
+      ctx.fillStyle = BRAND.gulfDeep;
+      ctx.textAlign = 'left';
+      ctx.fillText('LIVES', 14, 18);
+      for (let i = 0; i < state.lives; i++) {
+        const lx = 50 + i * 16;
+        const ly = 14;
+        ctx.fillStyle = BRAND.ink;
+        ctx.beginPath();
+        ctx.moveTo(lx - 5, ly); ctx.lineTo(lx - 4, ly - 2); ctx.lineTo(lx + 4, ly - 2); ctx.lineTo(lx + 5, ly); ctx.lineTo(lx + 4, ly + 2); ctx.lineTo(lx - 4, ly + 2); ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = BRAND.shallow;
+        ctx.fillRect(lx - 3, ly - 0.4, 6, 0.9);
+      }
+      ctx.restore();
+    }
+
+    // Photo streak dots (bottom-left of HUD area, top center-left)
+    if (state.snapStreak > 0) {
+      ctx.save();
+      ctx.font = '500 9px "JetBrains Mono", monospace';
+      ctx.fillStyle = BRAND.gulfDeep;
+      ctx.textAlign = 'left';
+      ctx.fillText('PHOTOS', 14, 36);
+      for (let i = 0; i < 3; i++) {
+        const dx = 60 + i * 11;
+        const dy = 33;
+        ctx.beginPath();
+        ctx.arc(dx, dy, 3, 0, Math.PI * 2);
+        if (i < state.snapStreak) {
+          ctx.fillStyle = BRAND.gulf;
+          ctx.fill();
+        } else {
+          ctx.strokeStyle = BRAND.muted;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    // Boost timer banner across the top
+    if (state.boostTimer > 0) {
+      ctx.save();
+      ctx.font = '600 12px "JetBrains Mono", monospace';
+      ctx.fillStyle = BRAND.gulfDeep;
+      ctx.textAlign = 'center';
+      ctx.fillText(`BOOST ${state.boostTimer.toFixed(1)}s`, W / 2, 18);
+      // thin progress bar
+      const barW = 120;
+      const barX = W / 2 - barW / 2;
+      const barY = 24;
+      ctx.fillStyle = BRAND.rule;
+      ctx.fillRect(barX, barY, barW, 2);
+      ctx.fillStyle = BRAND.shallow;
+      ctx.fillRect(barX, barY, barW * (state.boostTimer / 5), 2);
+      ctx.restore();
+    }
+
+    // Invuln shimmer around drone after respawn
+    if (state.invulnTimer > 0) {
+      ctx.save();
+      const a = Math.sin(state.t * 30) * 0.5 + 0.5;
+      ctx.strokeStyle = BRAND.shallow;
+      ctx.lineWidth = 1.2;
+      ctx.globalAlpha = 0.45 + a * 0.35;
+      ctx.beginPath();
+      ctx.arc(drone.x, drone.y, 22, 0, Math.PI * 2);
+      ctx.stroke();
       ctx.restore();
     }
   }

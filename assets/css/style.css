@@ -3305,6 +3305,67 @@ section {
   color: var(--shallow);
 }
 
+/* ---------------- /game page ---------------- */
+
+.gamepage {
+  position: relative;
+  padding: 140px var(--gutter) 80px;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.gamepage-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.gamepage .display { margin-top: 8px; }
+.gamepage .lede { max-width: 640px; margin-bottom: 8px; }
+
+.gamepage-controls {
+  margin-top: 36px;
+  width: 100%;
+  max-width: 780px;
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+}
+.gamepage-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+}
+.gamepage-controls-grid > div { display: flex; flex-direction: column; gap: 6px; }
+.gamepage-controls-grid dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.gamepage-controls-grid dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.gamepage-controls-grid kbd {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  color: var(--ink);
+  background: var(--paper);
+  margin-right: 2px;
+}
+@media (max-width: 640px) {
+  .gamepage { padding-top: 110px; }
+  .gamepage-controls-grid { grid-template-columns: 1fr; gap: 14px; }
+}
+
 /* ---------------- 404 game ---------------- */
 
 .notfound-game {

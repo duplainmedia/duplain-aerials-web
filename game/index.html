@@ -3,9 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Off the map · Duplain Aerials</title>
-  <meta name="robots" content="noindex, nofollow" />
+  <title>Pilot the drone · Duplain Aerials</title>
+  <meta name="description" content="A small browser flight over the Duplain Aerials survey corridor. Hold the signal as long as you can." />
   <meta name="theme-color" content="#0B1416" />
+
+  <meta property="og:title" content="Pilot the drone · Duplain Aerials" />
+  <meta property="og:description" content="A small browser flight over the survey corridor. Hold the signal as long as you can." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://duplainaerials.com/game" />
+  <meta property="og:image" content="/assets/og-image.svg" />
 
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 
@@ -15,7 +21,7 @@
 
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
-<body class="doc-body notfound-body">
+<body class="doc-body gamepage-body">
 
   <header class="topbar">
     <a class="wordmark" href="/">
@@ -35,23 +41,11 @@
     </nav>
   </header>
 
-  <main class="notfound">
-    <div class="notfound-contours" aria-hidden="true">
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-        <g fill="none" stroke="currentColor" stroke-width=".6" opacity=".5">
-          <path d="M-200 720 Q 200 620, 520 680 T 1100 660 T 1900 720"/>
-          <path d="M-200 660 Q 220 560, 540 620 T 1120 600 T 1900 660"/>
-          <path d="M-200 600 Q 240 500, 560 560 T 1140 540 T 1900 600"/>
-          <path d="M-200 540 Q 260 440, 580 500 T 1160 480 T 1900 540"/>
-          <path d="M-200 480 Q 280 380, 600 440 T 1180 420 T 1900 480"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="notfound-inner">
-      <p class="eyebrow"><span class="eyebrow-dot"></span>404 · Signal lost</p>
-      <h1 class="display">Off the <em>map.</em></h1>
-      <p class="lede">Whatever you were looking for is not here. While the drone is up, take it for a spin.</p>
+  <main class="gamepage">
+    <div class="gamepage-inner">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Sandbox flight</p>
+      <h1 class="display">Pilot the <em>drone.</em></h1>
+      <p class="lede">A small flight over the survey corridor. Snap a photo of every pond you cross, catch an updraft when one rises, and hold the signal as long as you can.</p>
 
       <div class="notfound-game" data-notfound-game>
         <canvas class="notfound-game-canvas" data-game-canvas aria-label="Drone flight mini-game"></canvas>
@@ -75,14 +69,22 @@
         </div>
       </div>
 
-      <div class="hero-cta notfound-game-after">
-        <a class="btn btn-ghost" href="/">Return to site</a>
-        <a class="btn btn-ghost" href="/#contact">Send an inquiry</a>
+      <div class="gamepage-controls">
+        <dl class="gamepage-controls-grid">
+          <div>
+            <dt>Climb</dt>
+            <dd><kbd>Space</kbd> · <kbd>Hold</kbd> screen</dd>
+          </div>
+          <div>
+            <dt>Snap pond</dt>
+            <dd><kbd>Enter</kbd></dd>
+          </div>
+          <div>
+            <dt>Quit</dt>
+            <dd><kbd>Esc</kbd></dd>
+          </div>
+        </dl>
       </div>
-    </div>
-
-    <div class="notfound-coords" aria-hidden="true">
-      <span>STATUS · OUT OF RANGE</span><span>RETURN HOME</span>
     </div>
   </main>
 
